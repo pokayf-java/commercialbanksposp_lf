@@ -45,30 +45,44 @@ public class PayOrderDetailPK implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	
+	@Column(name = "ProvId",length=2)
 	public String getProvId() {
 		return provId;
 	}
 	public void setProvId(String provId) {
 		this.provId = provId;
 	}
+	
+	
+	@Column(name = "UnitId",length=4)
 	public String getUnitId() {
 		return unitId;
 	}
 	public void setUnitId(String unitId) {
 		this.unitId = unitId;
 	}
+	
+	
+	@Column(name = "OrderId",length=20)
 	public String getOrderId() {
 		return orderId;
 	}
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
+	
+	
+	@Column(name = "CurrencyId",length=2)
 	public String getCurrencyId() {
 		return currencyId;
 	}
 	public void setCurrencyId(String currencyId) {
 		this.currencyId = currencyId;
 	}
+	
+	@Column(name = "CurrencyKind",length=4)
 	public Integer getCurrencyKind() {
 		return currencyKind;
 	}

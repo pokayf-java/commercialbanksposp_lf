@@ -60,7 +60,6 @@ public class BaseService<T, PK extends Serializable> implements IBaseService<T, 
 
 	@Override
 	public List<T> getAll() {
-		
 		return baseDao.getAll();
 	}
 

@@ -40,6 +40,11 @@
 		<property name="password" value="${jdbc.password}" />
 		<!-- 设置连接池初始值 -->
 		<property name="initialPoolSize" value="5" />
+		<property name="checkoutTimeout" value="60" />
+		<!-- <property name="min_size" value="5" />
+		<property name="max_size" value="15" />
+		<property name="time_out" value="1800" />
+		<property name="max_statement" value="50" /> -->
 	</bean>
 
 	<!-- 配置sessionFactory -->
@@ -56,9 +61,9 @@
 				<!-- 设置自动创建|更新|验证数据库表结构 validate-->
 				hibernate.hbm2ddl.auto= update
 				<!-- 是否在控制台显示sql -->
-				hibernate.show_sql=false
+				hibernate.show_sql=true
 				<!-- 是否格式化sql，优化显示 -->
-				hibernate.format_sql=false
+				hibernate.format_sql=true
 				<!-- 是否开启二级缓存 -->
 				hibernate.cache.use_second_level_cache=false
 				<!-- 是否开启查询缓存 -->
@@ -130,13 +135,23 @@
 
 
 	<!-- 要调用的工作类(quartzJob是com.kay.quartz.QuartzJob的实例化) -->
-	<bean id="quartzJob" class="com.poka.app.quartz.JobQuartz"></bean>
+	
+	<bean id="quartzJob" class="com.poka.app.quartz.QuartzJob"></bean>
+	
+	<bean id="perinfoAndBranchInfoJob" class="com.poka.app.quartz.PerinfoAndBranchInfoJob"></bean>
+	
 	<!-- 定义调用对象和调用对象的方法 -->
 
 
 	<bean id="jobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="quartzJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobPbDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="perinfoAndBranchInfoJob" />
 		<property name="targetMethod" value="work" />
 	</bean>
 
@@ -148,8 +163,18 @@
 		<property name="jobDetail" ref="jobDetail" />
 		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 60 seconds -->
-		<property name="repeatInterval" value="60000" />
+		<!-- repeat every 60*10 seconds -->
+		<property name="repeatInterval" value="600000" />
+	</bean>
+	
+	<bean id="pbTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobPbDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<!-- repeat every 3600 seconds -->
+		<property name="repeatInterval" value="3600000" />
 	</bean>
 
 	<bean id="startQuertz" lazy-init="false" autowire="no"
@@ -159,7 +184,8 @@
 			/> -->
 		<property name="triggers">
 			<list>
-				<ref bean="simpleTrigger" />
+				<!-- <ref bean="simpleTrigger"/> -->
+				<ref bean="pbTrigger"/>
 			</list>
 		</property>
 		<property name="jobFactory">

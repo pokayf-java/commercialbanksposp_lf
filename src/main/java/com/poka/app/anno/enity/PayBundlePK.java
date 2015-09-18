@@ -43,24 +43,33 @@ public class PayBundlePK implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	@Column(name = "ProvId",length=2)
 	public String getProvId() {
 		return provId;
 	}
 	public void setProvId(String provId) {
 		this.provId = provId;
 	}
+	
+	@Column(name = "UnitId",length=4)
 	public String getUnitId() {
 		return unitId;
 	}
 	public void setUnitId(String unitId) {
 		this.unitId = unitId;
 	}
+	
+	@Column(name = "BundleCode",length=20)
 	public String getBundleCode() {
 		return bundleCode;
 	}
 	public void setBundleCode(String bagCode) {
 		this.bundleCode = bagCode;
 	}
+	
+	
+	@Column(name = "OrderId",length=20)
 	public String getOrderId() {
 		return orderId;
 	}

@@ -74,7 +74,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
     
 	public List<OrderInfo> getUnsendOrder(OrderType type){
 		String hql = "from OrderInfo o where o.orderType = :orderType and o.state=0";
-		Map<String, OrderType> map = new HashMap<>();
+		Map<String, OrderType> map = new HashMap();
 		map.put("orderType", type);
 		return this.getBaseDao().find(hql,map);
 	}
@@ -82,7 +82,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public AppointmentVo getAppointmentVo(String orderId){
 		AppointmentVo vo = new AppointmentVo();
 		String hql = "from ReserveMain r where r.rsvNo=:orderId";
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap();
 		map.put("orderId", orderId);
 		vo.setReserveMain((ReserveMain)reserveMainDao.findUnique(hql, map));
 		String hql2 = "from ReserveDetail r where r.rsvNo=:orderId";
@@ -93,7 +93,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public AppointmenResult getAppointmenResult(String orderId){
 		AppointmenResult vo = new AppointmenResult();
 		String hql = "from ReserveMain r where r.rsvNo=:orderId";
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap();
 		map.put("orderId", orderId);
 		ReserveMain main = (ReserveMain)reserveMainDao.findUnique(hql, map);
 		vo.setCheckRemark(main.getCheckRemark());
@@ -105,7 +105,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public void updateOrderInfoState(OrderInfo order,StateType state){
 //		String hql = " update OrderInfo o set o.state=:state where o.orderId=:orderId and o.orderType=:orderType  ";
 		String hql = " update OrderInfo o set o.state=:state, o.finishDate=:finishDate where o.orderId=:orderId and o.orderType=:orderType";
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap();
 		map.put("orderId", order.getOrderId());
 		map.put("state", state);
 		map.put("orderType", order.getOrderType());
@@ -116,7 +116,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public boolean saveAppointmentResult(AppointmenResult appointment){
 		if(appointment == null)return false;
 		String hql = "from ReserveMain r where r.rsvNo=:orderId";
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("orderId", appointment.getOrderId());
 		ReserveMain apply = reserveMainDao.findUnique(hql, map);
 		if(apply == null) return false;
@@ -129,7 +129,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public PaymentVo getPaymentVo(String orderId){
 		PaymentVo vo = new PaymentVo();
 		String hql = "from PayOrder r where r.orderId=:orderId";
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("orderId", orderId);
 //		System.out.println(payOrderDao.findUnique(hql, map));
 		vo.setPayOrder((PayOrder)payOrderDao.findUnique(hql, map));
@@ -145,7 +145,7 @@ public class OrderInfoService extends BaseService<OrderInfo, Integer> {
 	public QryApply getQryApply(String orderId){
 		QryApply vo = new QryApply();
 		String hql = "from QryApply q where q.orderId=:orderId";
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("orderId", orderId);
 		vo = qryApplyDao.findUnique(hql,map);
 		return vo;

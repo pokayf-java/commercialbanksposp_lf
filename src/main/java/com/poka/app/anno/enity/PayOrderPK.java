@@ -25,6 +25,8 @@ public class PayOrderPK implements Serializable {
 		this.id = id;
 	}
 
+
+	@Column(name = "ProvId",length=2)
 	public String getProvId() {
 		return provId;
 	}
@@ -33,6 +35,8 @@ public class PayOrderPK implements Serializable {
 		this.provId = provId;
 	}
 
+	
+	@Column(name = "UnitId",length=4)
 	public String getUnitId() {
 		return unitId;
 	}
@@ -41,6 +45,8 @@ public class PayOrderPK implements Serializable {
 		this.unitId = unitId;
 	}
 
+	
+	@Column(name = "OrderId",length=20)
 	public String getOrderId() {
 		return orderId;
 	}

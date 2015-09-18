@@ -44,6 +44,5 @@
 	<servlet-mapping>
 		<servlet-name>CXFService</servlet-name>
 		<url-pattern>/ws/*</url-pattern>
-
 	</servlet-mapping>
 </web-app>

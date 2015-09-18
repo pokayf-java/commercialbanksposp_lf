@@ -24,4 +24,12 @@ public interface IPBPospSW {
 	@WebMethod(operationName = "makeQryApply")
 	@WebResult(name = "result")
 	public boolean makeQryApply(@WebParam(name = "qryApply")QryApply qryApply);
+	
+	@WebMethod(operationName = "getPerInfoData")
+	@WebResult(name = "result")
+	public boolean getPerInfoData(@WebParam(name = "listData")String  listData);
+	
+	@WebMethod(operationName = "getBanchInfoData")
+	@WebResult(name = "result")
+	public boolean getBanchInfoData(@WebParam(name = "listData")String  listData);
 }

@@ -66,6 +66,7 @@ public class PayBundle implements Serializable {
 	}
 	@Id
 	@Column(name = "Did")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
 		return id;
 	}
