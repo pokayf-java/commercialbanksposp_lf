@@ -1,7 +1,8 @@
 package com.poka.app.anno.bussiness;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import com.poka.app.vo.AppointmenResult;
 import com.poka.app.vo.AppointmentVo;
 
 @Component
-public class AppointmentBussiness {
-	Logger logger = Logger.getLogger(AppointmentBussiness.class);
+public class AppointmentBusiness {
+	Logger logger = Logger.getLogger(AppointmentBusiness.class);
 	private OrderInfoService orderInfoService;
 	
 	private CxfUtil cxfUtil;
@@ -35,6 +36,9 @@ public class AppointmentBussiness {
 		this.orderInfoService = orderInfoService;
 	}
 
+	/**
+	 * 预约取款
+	 */
 	public void makeAppointment() {
 		List<OrderInfo> orders = this.orderInfoService
 				.getUnsendOrder(OrderType.APPOINTMENT);
@@ -59,15 +63,15 @@ public class AppointmentBussiness {
 			try{
 				result = service.makeAppointmen(vo);
 			}catch(Exception ex){
-				logger.info("连接服务器失败!");
+				logger.info("连接服务器失败...");
 			}
 			if (result) {
 				
-				logger.info("处理預約取款订单:" + orderId+"  成功");
+				logger.info("处理預約取款订单:" + orderId+"  成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 				this.orderInfoService.updateOrderInfoState(order,
 						StateType.SENDED);
 			}else{
-				logger.info("处理預約取款订单:" + orderId+"  失败");
+				logger.info("处理預約取款订单:" + orderId+"  失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 			}
 			try {
 				Thread.sleep(50000);

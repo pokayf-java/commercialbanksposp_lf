@@ -1,5 +1,7 @@
 package com.poka.app.anno.bussiness;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -16,8 +18,8 @@ import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.CxfUtil;
 
 @Component
-public class QryApplyBussiness {
-	Logger logger = Logger.getLogger(QryApplyBussiness.class);
+public class QryApplyBusiness {
+	Logger logger = Logger.getLogger(QryApplyBusiness.class);
 	private OrderInfoService orderInfoService;
 	
 	private CxfUtil cxfUtil;
@@ -33,6 +35,9 @@ public class QryApplyBussiness {
 		this.orderInfoService = orderInfoService;
 	}
 
+	/**
+	 * 查询申请
+	 */
 	public void makeQryApply() {
 		List<OrderInfo> orders = this.orderInfoService
 				.getUnsendOrder(OrderType.APPLICATION);
@@ -55,15 +60,15 @@ public class QryApplyBussiness {
 			try{
 				result = service.makeQryApply(vo);
 			}catch(Exception ex){
-				logger.info("连接服务器失败!");
+				logger.info("连接服务器失败...");
 			}
 			if (result) {
 				
-				logger.info("处理查询申请订单:" + orderId+"  成功");
+				logger.info("处理查询申请订单:" + orderId+"  成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 				this.orderInfoService.updateOrderInfoState(order,
 						StateType.SENDED);
 			}else{
-				logger.info("处理查询申请订单:" + orderId+"  失败");
+				logger.info("处理查询申请订单:" + orderId+"  失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 			}
 			try {
 				Thread.sleep(50000);

@@ -2,15 +2,15 @@ package com.poka.app.cb.ws.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.poka.app.anno.bussiness.GzhQueryBussiness;
+import com.poka.app.anno.bussiness.GzhQueryBusiness;
 import com.poka.app.cb.ws.IgzhQuery;
 
 public class GzhQuerySW implements IgzhQuery {
 
-	private GzhQueryBussiness gzhQueryBussiness;
+	private GzhQueryBusiness gzhQueryBussiness;
 	
 	@Autowired
-	public void setGzhQueryBussiness(GzhQueryBussiness gzhQueryBussiness) {
+	public void setGzhQueryBussiness(GzhQueryBusiness gzhQueryBussiness) {
 		this.gzhQueryBussiness = gzhQueryBussiness;
 	}
 

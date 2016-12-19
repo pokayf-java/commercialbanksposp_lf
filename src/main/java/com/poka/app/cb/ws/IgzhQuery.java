@@ -5,7 +5,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import com.poka.app.vo.AppointmenResult;
 
 @WebService
 public interface IgzhQuery {

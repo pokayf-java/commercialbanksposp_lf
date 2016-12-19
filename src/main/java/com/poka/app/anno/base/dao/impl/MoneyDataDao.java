@@ -3,8 +3,6 @@ package com.poka.app.anno.base.dao.impl;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +13,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
 
 import com.poka.app.anno.base.dao.IMoneyDataDao;
 import com.poka.app.anno.enity.MoneyDataInfo;
@@ -69,10 +65,6 @@ public class MoneyDataDao implements IMoneyDataDao {
 			throw new Exception();
 		}
 		String sql = "select *" + " from" + " (" + " select A.percode percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype ,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype ,"
-				// +" TO_CHAR(A.coltime,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.coltime,'%Y-%m-%d %H:%i:%S') as OperDate,"
 				+ getFormatType()
 				+ " A.mon mon,"
 				+ " A.monval monval,"
@@ -80,202 +72,27 @@ public class MoneyDataDao implements IMoneyDataDao {
 				+ " A.bundleid bundleid,"
 				+ " A.imagepath imagepath,"
 				+ " C.ipaddr ipaddr,"
-				// +" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
+				+ " A.businesstype businesstype,"
 				+ " A.bankno bankno,"
 				+ " C.bankname bankname,"
 				+ " A.agencyno agencyno,"
 				+ " D.branchname branchname"
 				+ " from MONEYDATA A"
-				// +" left JOIN PERINFO B"
-				// +" on A.percode= B.percode"
 				+ " left join BANKINFO C"
 				+ " on A.bankno= C.bankno"
 				+ " left join BRANCHINFO D"
 				+ " on A.agencyno= D.agencyno"
 				+ " where A.mon=?"
-
-				+ " UNION ALL"
-
-				+ " select A.percode percode,"
-				// +" case C.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case C.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// +" TO_CHAR(B.scantime,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(B.scantime,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.mon mon,"
-				+ " A.monval monval,"
-				+ " A.monver monver,"
-				+ " A.bundleid bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " D.ipaddr ipaddr,"
-				// +" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.bankno bankno,"
-				+ " D.bankname bankname,"
-				+ " A.agencyno agencyno,"
-				+ " E.branchname branchname"
-				+ " from MONEYDATA A"
-				+ " inner JOIN BUNDLEINFO B"
-				+ " on A.bundleid = B.bundleid"
-				// +" inner JOIN PERINFO C"
-				// +" on B.percode= C.percode"
-				+ " inner join BANKINFO D"
-				+ " on A.bankno= D.bankno"
-				+ " left join BRANCHINFO E"
-				+ " on A.agencyno= E.agencyno"
-				+ " where A.mon=?"
-				+ " AND (B.FLAG ='0'"
-				+ " OR B.FLAG ='1')"
-
-				+ " UNION ALL"
-
-				+ " select A.PERCODE percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// +" TO_CHAR(E.OPERTIME,'YYYY-MM-DD HH24:MI:SS') as OPerdate,"
-				// +" DATE_FORMAT(E.OPERTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.MON mon,"
-				+ " A.MONVAL monval,"
-				+ " A.monver monver,"
-				+ " A.BUNDLEID bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " C.ipaddr ipaddr,"
-				// +" case E.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case E.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.BANKNO bankno,"
-				+ " C.BANKNAME bankname,"
-				+ " A.AGENCYNO agencyno,"
-				+ " D.BRANCHNAME branchname"
-				+ " from MONEYDATA A"
-				+ " inner join WITHDRAWINFO E"
-				+ " on E.SCANID = A.BUNDLEID"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE = B.PERCODE"
-				+ " inner join BANKINFO C"
-				+ " on A.bankno = C.bankno"
-				+ " inner join BRANCHINFO D"
-				+ " on A.agencyno = D.agencyno"
-				+ " where A.mon=?"
-
-				+ " UNION ALL"
-
-				+ " select A.PERCODE percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as ,"
-				// +" TO_CHAR(F.OPERTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(F.OPERTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.MON mon,"
-				+ " A.MONVAL monval,"
-				+ " A.monver monver,"
-				+ " A.BUNDLEID bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " C.ipaddr ipaddr,"
-				// +" case F.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case F.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.BANKNO bankno," + " C.BANKNAME bankname," + " A.AGENCYNO agencyno,"
-				+ " D.BRANCHNAME branchname"
-				+ " from MONEYDATA A"
-				+ " inner join PACKAGEINFO E"
-				+ " on A.BUNDLEID =E.BUNDLEID"
-				+ " inner join WITHDRAWINFO F"
-				+ " on E.PACKAGEID = F.SCANID"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE = B.PERCODE"
-				+ " inner join BANKINFO C" + " on A.Bankno = C.bankno"
-				+ " inner join BRANCHINFO D" + " on A.agencyno = D.agencyno"
-				+ " where A.mon=?"
-
-				// +" UNION ALL"
-				//
-				// +" select A.PERCODE,"
-				// //+" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// //+" TO_CHAR(A.COLTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.COLTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				// +" A.MON,"
-				// +" A.MONVAL,"
-				// +" A.MONVER,"
-				// +" A.BUNDLEID,"
-				// +" A.imagepath,"
-				// +" C.ipaddr,"
-				// //+" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				// +" case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				// +" B.BANKNO,"
-				// +" C.BANKNAME,"
-				// +" B.AGENCYNO,"
-				// +" D.BRANCHNAME"
-				// +" from V_MONBOXOFPACKAGEPUSHATM A"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE=B.percode"
-				// +" inner join BANKINFO C"
-				// +" on B.BANKNO=C.BANKNO"
-				// +" inner join BRANCHINFO D"
-				// +" on B.AGENCYNO=D.AGENCYNO"
-				// +" where A.mon=?"
-				//
-				// +" UNION ALL"
-
-				// +" select A.PERCODE,"
-				// //+" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// //+" TO_CHAR(A.COLTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.COLTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				// +" A.MON,"
-				// +" A.MONVAL,"
-				// +" A.MONVER,"
-				// +" A.BUNDLEID,"
-				// +" A.imagepath,"
-				// +" C.ipaddr,"
-				// //+" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				// +" case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				// +" B.BANKNO,"
-				// +" C.BANKNAME,"
-				// +" B.AGENCYNO,"
-				// +" D.BRANCHNAME"
-				// +" from V_MONBOXOFBUNDLEPUSHATM A"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE=B.percode"
-				// +" inner join BANKINFO C"
-				// +" on B.BANKNO=C.BANKNO"
-				// +" inner join BRANCHINFO D"
-				// +" on B.AGENCYNO=D.AGENCYNO"
-				// +" where A.mon=?"
 				+ " ) T" + " order by OperDate asc";
-		// +" limit 0,500 ";
-		
-//		select A.percode percode,"
-//		// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype ,"
-//		// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype ,"
-//		// +" TO_CHAR(A.coltime,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-//		// +" DATE_FORMAT(A.coltime,'%Y-%m-%d %H:%i:%S') as OperDate,"
-//		+ getFormatType()
-//		+ " A.mon mon,"
-//		+ " A.monval monval,"
-//		+ " A.monver monver,"
-//		+ " A.bundleid bundleid,"
-//		+ " A.imagepath imagepath,"
-//		+ " C.ipaddr ipaddr,"
-//		// +" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-//		+ " case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-//		+ " A.bankno bankno,"
-//		+ " C.bankname bankname,"
-//		+ " A.agencyno agencyno,"
-//		+ " D.branchname branchname"
-		
-
-		
 		return query(sql,mon);
 
 	}
     public List<MoneyDataInfo> query(String sql,String mon){
     	SQLQuery query = getSession().createSQLQuery(sql);
 		query.setString(0, mon);
-		query.setString(1, mon);
-		query.setString(2, mon);
-		query.setString(3, mon);
+//		query.setString(1, mon);
+//		query.setString(2, mon);
+//		query.setString(3, mon);
 		query.addScalar("percode", StandardBasicTypes.STRING);
 		query.addScalar("operdate", StandardBasicTypes.STRING);
 		query.addScalar("mon", StandardBasicTypes.STRING);
@@ -299,7 +116,11 @@ public class MoneyDataDao implements IMoneyDataDao {
 			mo.setMonval((String)ob[3]);
 			mo.setMonver((String)ob[4]);
 			mo.setBundleid((String)ob[5]);
-			mo.setImagepath(GetImageStr((String)ob[6]));
+			if(null !=(String)ob[6]||"".equals((String)ob[6])){
+				mo.setImagepath(GetImageStr((String)ob[6]));
+			}else {
+				mo.setImagepath((String)ob[6]);
+			}
 			mo.setIpaddr((String)ob[7]);
 			mo.setBusinesstype((String)ob[8]);
 			mo.setBankno((String)ob[9]);
@@ -339,10 +160,6 @@ public class MoneyDataDao implements IMoneyDataDao {
 		}
 
 		String sql = "select *" + " from" + " (" + " select A.percode percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype ,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype ,"
-				// +" TO_CHAR(A.coltime,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.coltime,'%Y-%m-%d %H:%i:%S') as OperDate,"
 				+ getFormatType()
 				+ " A.mon mon,"
 				+ " A.monval monval,"
@@ -350,172 +167,18 @@ public class MoneyDataDao implements IMoneyDataDao {
 				+ " A.bundleid bundleid,"
 				+ " A.imagepath imagepath,"
 				+ " C.ipaddr ipaddr,"
-				// +" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
+				+ " A.businesstype businesstype,"
 				+ " A.bankno bankno,"
 				+ " C.bankname bankname,"
 				+ " A.agencyno agencyno,"
 				+ " D.branchname branchname"
 				+ " from MONEYDATA A"
-				// +" left JOIN PERINFO B"
-				// +" on A.percode= B.percode"
 				+ " left join BANKINFO C"
 				+ " on A.bankno= C.bankno"
 				+ " left join BRANCHINFO D"
 				+ " on A.agencyno=D.agencyno"
 				+ " where A.mon like ?"
-
-				+ " UNION ALL"
-
-				+ " select A.percode percode,"
-				// +" case C.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case C.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// +" TO_CHAR(B.scantime,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(B.scantime,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.mon mon,"
-				+ " A.monval monval,"
-				+ " A.monver monver,"
-				+ " A.bundleid bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " D.ipaddr ipaddr,"
-				// +" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.bankno bankno,"
-				+ " D.bankname bankname,"
-				+ " A.agencyno agencyno,"
-				+ " E.branchname branchname"
-				+ " from MONEYDATA A"
-				+ " inner JOIN BUNDLEINFO B"
-				+ " on A.bundleid= B.bundleid"
-				// +" inner JOIN PERINFO C"
-				// +" on B.percode= C.percode"
-				+ " inner join BANKINFO D"
-				+ " on A.bankno= D.bankno"
-				+ " left join BRANCHINFO E"
-				+ " on A.agencyno=E.agencyno"
-				+ " where A.mon like ?"
-				+ " AND (B.FLAG ='0'"
-				+ " OR B.FLAG ='1')"
-
-				+ " UNION ALL"
-
-				+ " select A.PERCODE percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// +" TO_CHAR(E.OPERTIME,'YYYY-MM-DD HH24:MI:SS') as OPerdate,"
-				// +" DATE_FORMAT(E.OPERTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.MON mon,"
-				+ " A.MONVAL monval,"
-				+ " A.monver monver,"
-				+ " A.BUNDLEID bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " C.ipaddr ipaddr,"
-				// +" case E.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case E.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.BANKNO bankno,"
-				+ " C.BANKNAME bankname,"
-				+ " A.AGENCYNO agencyno,"
-				+ " D.BRANCHNAME branchname"
-				+ " from MONEYDATA A"
-				+ " inner join WITHDRAWINFO E"
-				+ " on E.SCANID = A.BUNDLEID"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE = B.PERCODE"
-				+ " inner join BANKINFO C"
-				+ " on A.bankno = C.bankno"
-				+ " inner join BRANCHINFO D"
-				+ " on A.agencyno = D.agencyno"
-				+ " where A.mon like ?"
-
-				+ " UNION ALL"
-
-				+ " select A.PERCODE percode,"
-				// +" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// +" TO_CHAR(F.OPERTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(F.OPERTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				+ getFormatType()
-				+ " A.MON mon,"
-				+ " A.MONVAL monval,"
-				+ " A.monver monver,"
-				+ " A.BUNDLEID bundleid,"
-				+ " A.imagepath imagepath,"
-				+ " C.ipaddr ipaddr,"
-				// +" case F.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				+ " case F.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				+ " A.BANKNO bankno," + " C.BANKNAME bankname," + " A.AGENCYNO agecyno,"
-				+ " D.BRANCHNAME"
-				+ " from MONEYDATA A"
-				+ " inner join PACKAGEINFO E"
-				+ " on A.BUNDLEID = E.BUNDLEID"
-				+ " inner join WITHDRAWINFO F"
-				+ " on E.PACKAGEID = F.SCANID"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE = B.PERCODE"
-				+ " inner join BANKINFO C" + " on A.Bankno = C.bankno"
-				+ " inner join BRANCHINFO D" + " on A.agencyno = D.agencyno"
-				+ " where A.mon like ?"
-
-				// +" UNION ALL"
-				//
-				// +" select A.PERCODE,"
-				// //+" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// //+" TO_CHAR(A.COLTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.COLTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				// +" A.MON,"
-				// +" A.MONVAL,"
-				// +" A.MONVER,"
-				// +" A.BUNDLEID,"
-				// +" A.imagepath,"
-				// +" C.ipaddr,"
-				// //+" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				// +" case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				// +" B.BANKNO,"
-				// +" C.BANKNAME,"
-				// +" B.AGENCYNO,"
-				// +" D.BRANCHNAME"
-				// +" from V_MONBOXOFPACKAGEPUSHATM A"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE=B.percode"
-				// +" inner join BANKINFO C"
-				// +" on B.BANKNO=C.BANKNO"
-				// +" inner join BRANCHINFO D"
-				// +" on B.AGENCYNO=D.AGENCYNO"
-				// +" where A.mon like ?"
-				//
-				// +" UNION ALL"
-				//
-				// +" select A.PERCODE,"
-				// //+" case B.pertype when '00' then '点钞机'  when '01' then 'ATM' when '02' then '清分机' end as pertype,"
-				// +" case B.pertype when '00' then '00'  when '01' then '01' when '02' then '02' end as pertype,"
-				// //+" TO_CHAR(A.COLTIME,'YYYY-MM-DD HH24:MI:SS') as OperDate,"
-				// +" DATE_FORMAT(A.COLTIME,'%Y-%m-%d %H:%i:%S') as OperDate,"
-				// +" A.MON,"
-				// +" A.MONVAL,"
-				// +" A.MONVER,"
-				// +" A.BUNDLEID,"
-				// +" A.imagepath,"
-				// +" C.ipaddr,"
-				// //+" case A.businesstype when '0' then '清分'  when '1' then '存款' when '2' then '取款' when '3' then '加钞' when '4' then '回收' end as businesstype,"
-				// +" case A.businesstype when '0' then '0'  when '1' then '1' when '2' then '2' when '3' then '3' when '4' then '4' end as businesstype,"
-				// +" B.BANKNO,"
-				// +" C.BANKNAME,"
-				// +" B.AGENCYNO,"
-				// +" D.BRANCHNAME"
-				// +" from V_MONBOXOFBUNDLEPUSHATM A"
-				// +" inner join PERINFO B"
-				// +" on A.PERCODE=B.percode"
-				// +" inner join BANKINFO C"
-				// +" on B.BANKNO=C.BANKNO"
-				// +" inner join BRANCHINFO D"
-				// +" on B.AGENCYNO=D.AGENCYNO"
-				// +" where A.mon like ?"
 				+ " ) T" + " order by OperDate asc";
-		// +" limit 0,500 ";
-
 		return query(sql,mon);
 	}
 

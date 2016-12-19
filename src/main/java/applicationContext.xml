@@ -39,12 +39,11 @@
 		<!-- 设置数据库密码 -->
 		<property name="password" value="${jdbc.password}" />
 		<!-- 设置连接池初始值 -->
-		<property name="initialPoolSize" value="5" />
-		<property name="checkoutTimeout" value="60" />
-		<!-- <property name="min_size" value="5" />
-		<property name="max_size" value="15" />
-		<property name="time_out" value="1800" />
-		<property name="max_statement" value="50" /> -->
+		<property name="initialPoolSize" value="20" />
+		<property name="checkoutTimeout" value="20000" />
+		<property name="testConnectionOnCheckin" value="true"/>
+		<property name="idleConnectionTestPeriod" value="60"/>
+		
 	</bean>
 
 	<!-- 配置sessionFactory -->
@@ -137,8 +136,12 @@
 	<!-- 要调用的工作类(quartzJob是com.kay.quartz.QuartzJob的实例化) -->
 	
 	<bean id="quartzJob" class="com.poka.app.quartz.QuartzJob"></bean>
-	
 	<bean id="perinfoAndBranchInfoJob" class="com.poka.app.quartz.PerinfoAndBranchInfoJob"></bean>
+	<bean id="bankAndNetRepJob" class="com.poka.app.quartz.BankAndNetRepJob"></bean>
+	<bean id="doProduceJob" class="com.poka.app.quartz.DoProduceJob"></bean>
+	<bean id="doDeleteLogsJob" class="com.poka.app.quartz.DoDeleteLogsJob"></bean>
+	<bean id="doUpdateMonRuleJob" class="com.poka.app.quartz.DoUpdateMonRuleJob"></bean>
+	<bean id="doBagInfoJob" class="com.poka.app.quartz.DoBagInfoJob"></bean>
 	
 	<!-- 定义调用对象和调用对象的方法 -->
 
@@ -149,43 +152,126 @@
 		<property name="targetMethod" value="work" />
 	</bean>
 	
+	<bean id="jobDoBagInfoDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doBagInfoJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoDelLogsDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doDeleteLogsJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoUpdateMonDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doUpdateMonRuleJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoProDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doProduceJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
 	<bean id="jobPbDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="perinfoAndBranchInfoJob" />
 		<property name="targetMethod" value="work" />
 	</bean>
+	
+	<bean id="jobBankAndNetRepJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bankAndNetRepJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
 
-	<!-- 定义触发时间 -->
-
+	<!-- 定义触发时间  SimpleTriggerFactoryBean-->
+	<!--  "0 0 12 * * ?" 每天中午12点触发 -->
+	<!--"0 15 10 ? * *" 每天上午10:15触发 -->
+	<!--"0 15 10 * * ?" 每天上午10:15触发-->
 	<bean id="simpleTrigger"
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDetail" />
 		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="300000" />
+	</bean>
+	
+	<bean id="bankAndNetRepTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobBankAndNetRepJobDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<!-- repeat every 3600 seconds -->
+		<property name="cronExpression" value="0 10 21 * * ?"></property>
+	</bean>
+	
+	<bean id="doBagInfoTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoBagInfoDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
 		<!-- repeat every 60*10 seconds -->
-		<property name="repeatInterval" value="600000" />
+		<property name="repeatInterval" value="300000" />
+		
+	</bean>
+	
+	<bean id="doDelLogsTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoDelLogsDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<property name="cronExpression" value="0 15 10 L * ?"></property>
+	</bean>
+	
+	<bean id="doProTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoProDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<!-- 每天凌晨一点执行 -->
+		<property name="cronExpression" value="0 0 1 * * ?"></property>
+	</bean>
+	
+	<bean id="doUpdateMonTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoUpdateMonDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<!-- 每天凌晨四点执行 -->
+		<property name="cronExpression" value="0 0 4 * * ?"></property>
 	</bean>
 	
 	<bean id="pbTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobPbDetail" />
 		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 3600 seconds -->
-		<property name="repeatInterval" value="3600000" />
+		<!-- 每天凌晨一点执行 -->
+		<property name="cronExpression" value="0 20 18 * * ?"></property>
 	</bean>
-
+	
 	<bean id="startQuertz" lazy-init="false" autowire="no"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<!-- <property name="dataSource" ref="dataSource" /> -->
-		<!-- <property name="applicationContextSchedulerContextKey" value="applicationContextKey" 
-			/> -->
 		<property name="triggers">
 			<list>
-				<!-- <ref bean="simpleTrigger"/> -->
+				<ref bean="simpleTrigger"/>
 				<ref bean="pbTrigger"/>
+				<ref bean="bankAndNetRepTrigger"/>
+				<ref bean="doProTrigger"/>
+				<ref bean="doDelLogsTrigger"/>
+				<ref bean="doUpdateMonTrigger"/>
+				<ref bean="doBagInfoTrigger"/>
 			</list>
 		</property>
 		<property name="jobFactory">

@@ -1,5 +1,7 @@
 package com.poka.app.anno.bussiness;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -17,8 +19,8 @@ import com.poka.app.vo.PaymentVo;
 
 
 @Component
-public class PaymentBussiness {
-	Logger logger = Logger.getLogger(PaymentBussiness.class);
+public class PaymentBusiness {
+	Logger logger = Logger.getLogger(PaymentBusiness.class);
 	private OrderInfoService orderInfoService;
 
 	private CxfUtil cxfUtil;
@@ -34,6 +36,9 @@ public class PaymentBussiness {
 		this.orderInfoService = orderInfoService;
 	}
 	
+	/**
+	 * 预约交款
+	 */
 	public void makePayment(){
 		List<OrderInfo> orders = this.orderInfoService.getUnsendOrder(OrderType.PAYMENT);
 		if(orders.size()<=0){
@@ -61,13 +66,13 @@ public class PaymentBussiness {
 			try{
 			 result = service.makePayment(vo);
 			}catch(Exception ex){
-				logger.info("连接服务器失败!");
+				logger.info("连接服务器失败...");
 			}
 			if (result) {
-				logger.info("处理交款订单:" + orderId+"  成功");
+				logger.info("处理交款订单:" + orderId+"  成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 				this.orderInfoService.updateOrderInfoState(order, StateType.SENDED);
 			}else{
-				logger.info("处理交款订单:" + orderId+"  失败");
+				logger.info("处理交款订单:" + orderId+"  失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
 			}
 			
 			try {
