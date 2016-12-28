@@ -10,7 +10,7 @@ import com.poka.app.util.ConstantUtil;
  * @author Administrator
  *
  */
-public class PerinfoAndBranchInfoJob {
+public class DoPerinfoAndBranchInfoJob {
 	
 	private PerInfoAndBranchInfoBusiness perInfoAndBranchInfoBussiness;
 	

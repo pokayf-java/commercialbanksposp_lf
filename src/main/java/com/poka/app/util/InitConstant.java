@@ -19,7 +19,7 @@ public class InitConstant {
 			ConstantUtil.perInfoAndBranchInfoFlag = argsConfigUtil.getPerInfoAndBranchInfoFlag();
 			ConstantUtil.monRuleCZYHFlag = argsConfigUtil.getMonRuleCZYHFlag();
 			ConstantUtil.bagInfoFlag = argsConfigUtil.getBagInfoFlag();
-			ConstantUtil.sendFileFlag = argsConfigUtil.getSendFileFlag();
+			ConstantUtil.lanBiaoFlag = argsConfigUtil.getLanBiaoFlag();
 		}
 	}
 }

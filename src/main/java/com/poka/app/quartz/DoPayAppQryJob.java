@@ -3,7 +3,6 @@ package com.poka.app.quartz;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poka.app.anno.bussiness.AppointmentBusiness;
-import com.poka.app.anno.bussiness.MonRuleBusiness;
 import com.poka.app.anno.bussiness.PaymentBusiness;
 import com.poka.app.anno.bussiness.QryApplyBusiness;
 import com.poka.app.util.ConstantUtil;
@@ -14,7 +13,7 @@ import com.poka.app.util.ConstantUtil;
  *
  */
 
-public class QuartzJob {
+public class DoPayAppQryJob {
 
 	AppointmentBusiness appointmentBussiness;
 	PaymentBusiness paymentBussiness;

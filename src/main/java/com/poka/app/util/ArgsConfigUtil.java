@@ -88,10 +88,11 @@ public class ArgsConfigUtil {
 	public String getBagInfoFlag(){
 		return p.getProperty("bagInfoFlag");
 	}
+	
 	/**
-	 * 下发文件到商行同步启用标识
+	 * 蓝标信息同步启用标识
 	 */
-	public String getSendFileFlag(){
-		return p.getProperty("sendFileFlag");
+	public String getLanBiaoFlag(){
+		return p.getProperty("lanBiaoFlag");
 	}
 }

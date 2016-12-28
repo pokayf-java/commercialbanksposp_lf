@@ -10,6 +10,8 @@ import javax.jws.WebService;
 import com.poka.app.anno.enity.BagInfo;
 import com.poka.app.anno.enity.BankCheckDailyRep;
 import com.poka.app.anno.enity.BankCheckDailyRepList;
+import com.poka.app.anno.enity.BusinessListCore;
+import com.poka.app.anno.enity.BusinessListDetail;
 import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
 import com.poka.app.anno.enity.QryApply;
@@ -72,5 +74,15 @@ public interface IPBPospSW {
 	@WebMethod(operationName = "sendBagInfo")
 	@WebResult(name = "result")
 	public boolean sendBagInfo(@WebParam(name = "bagInfoList") List<BagInfo> bagInfoList);
+	
+	/*核心业务流水*/
+	@WebMethod(operationName = "sendBusinessListCoreInfo")
+	@WebResult(name = "result")
+	public boolean sendBusinessListCoreInfo(@WebParam(name = "businessListCoreList") List<BusinessListCore> businessListCoreList);
+	
+	/*核心业务信息券别明细*/
+	@WebMethod(operationName = "sendBusinessListDetailInfo")
+	@WebResult(name = "result")
+	public boolean sendBusinessListDetailInfo(@WebParam(name = "businessListDetailList") List<BusinessListDetail> businessListDetailList);
 	
 }

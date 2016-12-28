@@ -24,6 +24,7 @@ public class BusinessListCore {
 	private String businessId;			//核心系统业务流水号
 	private BigDecimal moneyTotal;		//金额
 	private Character inOrOut;			//存取款标志
+	private String zhaiYoms;			//摘要描述
 	private String accountNo;			//账号
 	private String accountName;			//账号名称
 	private String accounType;			//账号类型
@@ -151,6 +152,14 @@ public class BusinessListCore {
 	}
 	public void setInserDate(Timestamp inserDate) {
 		this.inserDate = inserDate;
+	}
+	
+	@Column(name = "ZHAIYOMS",length = 50)
+	public String getZhaiYoms() {
+		return zhaiYoms;
+	}
+	public void setZhaiYoms(String zhaiYoms) {
+		this.zhaiYoms = zhaiYoms;
 	}
 
 }

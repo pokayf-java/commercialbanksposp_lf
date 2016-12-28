@@ -11,7 +11,7 @@ import com.poka.app.anno.enity.BusinessListCore;
 public class BusinessListCoreService extends BaseService<BusinessListCore, String> {
 
 	/**
-	 * 查询核心业务数据前一天或指定日期
+	 * 查询核心业务数据
 	 * 
 	 * @return
 	 */
@@ -25,7 +25,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	/**
 	 * 查询上次同步的完成时间
 	 * 
-	 * @param type
+	 * @param type 1：核心系统存取款业务信息，2：业务信息券别明细
 	 * @return
 	 */
 	public String getFinishDate(int type) {

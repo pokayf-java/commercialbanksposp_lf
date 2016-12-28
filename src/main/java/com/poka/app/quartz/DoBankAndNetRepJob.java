@@ -10,7 +10,7 @@ import com.poka.app.util.ConstantUtil;
  * @author lb
  * 
  */
-public class BankAndNetRepJob {
+public class DoBankAndNetRepJob {
 	
 	private BankAndNetRepBusiness bankAndNetRepBussiness;
 	
