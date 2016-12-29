@@ -95,4 +95,11 @@ public class ArgsConfigUtil {
 	public String getLanBiaoFlag(){
 		return p.getProperty("lanBiaoFlag");
 	}
+	
+	/**
+	 * dat文件存放路径
+	 */
+	public String getFilePath(){
+		return p.getProperty("filePath");
+	}
 }

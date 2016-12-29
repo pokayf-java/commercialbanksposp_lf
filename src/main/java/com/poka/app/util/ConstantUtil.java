@@ -17,5 +17,6 @@ public class ConstantUtil {
 	public static String bagInfoFlag;
 	public static String sendFileFlag;
 	public static String lanBiaoFlag;
+	public static String filePath;
 	
 }

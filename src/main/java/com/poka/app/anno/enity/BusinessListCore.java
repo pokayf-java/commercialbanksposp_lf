@@ -31,7 +31,7 @@ public class BusinessListCore {
 	private Character pubOrPri;			//对公对私类型(1:对公 2:对私)
 	private Character channel;			//渠道类型
 	private String remark;				//备注
-	private Timestamp inserDate;		//插入时间
+	private Timestamp insertDate;		//插入时间
 	
 	@Id
 	@Column(name = "ID")
@@ -147,11 +147,11 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "INSERDATE")
-	public Timestamp getInserDate() {
-		return inserDate;
+	public Timestamp getInsertDate() {
+		return insertDate;
 	}
-	public void setInserDate(Timestamp inserDate) {
-		this.inserDate = inserDate;
+	public void setInsertDate(Timestamp insertDate) {
+		this.insertDate = insertDate;
 	}
 	
 	@Column(name = "ZHAIYOMS",length = 50)

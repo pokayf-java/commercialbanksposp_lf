@@ -12,6 +12,7 @@ import com.poka.app.anno.base.service.impl.BusinessListDetailService;
 import com.poka.app.anno.enity.BusinessListCore;
 import com.poka.app.anno.enity.BusinessListDetail;
 import com.poka.app.pb.ws.IPBPospSW;
+import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
 
 /**
@@ -59,7 +60,9 @@ public class LanBiaoBusiness {
 		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate);
 		if (null != blcList && blcList.size() > 0) {
 			sendBusinessListCoreInfo(blcList);
-		}
+		}else {
+			logger.info("核心业务数据表没有要同步的数据...");
+		} 
 	}
 
 	public void sendBusinessListCoreInfo(List<BusinessListCore> dataList) {
@@ -101,7 +104,9 @@ public class LanBiaoBusiness {
 		List<BusinessListDetail> bldList = businessListDetailService.getBusinessListDetail(finishdate);
 		if (null != bldList && bldList.size() > 0) {
 			sendBusinessListDetailInfo(bldList);
-		}
+		} else {
+			logger.info("业务信息券别明细表没有要同步的数据...");
+		} 
 	}
 
 	public void sendBusinessListDetailInfo(List<BusinessListDetail> dataList) {
@@ -129,4 +134,12 @@ public class LanBiaoBusiness {
 			}
 		}
 	}
+	
+	/**
+	 * 导入ODS传过来的dat文件
+	 */
+	public void importODSData()	{
+		businessListCoreService.importODSData(ConstantUtil.filePath);
+	}
+	
 }

@@ -21,7 +21,9 @@ public class DoLanBiaoJob {
 
 	public void work() {
 		if(ConstantUtil.lanBiaoFlag.equals("Enabled")){
-			lanBiaoBusiness.sendBusinessListCoreInfo();;
+			lanBiaoBusiness.sendBusinessListCoreInfo();
+			lanBiaoBusiness.sendBusinessListDetailInfo();
+			lanBiaoBusiness.importODSData();
 		}
 	}
 	

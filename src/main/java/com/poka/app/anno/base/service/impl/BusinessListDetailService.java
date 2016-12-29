@@ -2,7 +2,7 @@ package com.poka.app.anno.base.service.impl;
 
 import java.util.List;
 
-import org.hibernate.SQLQuery;
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
 import com.poka.app.anno.enity.BusinessListDetail;
@@ -16,9 +16,8 @@ public class BusinessListDetailService extends BaseService<BusinessListDetail, S
 	 * @return
 	 */
 	public List<BusinessListDetail> getBusinessListDetail(String operDate) {
-		String sql = " SELECT * FROM BusinessListDetail WHERE inserDate >='" + operDate + "' and inserDate <= now() ";
-		SQLQuery query = this.getBaseDao().getSession().createSQLQuery(sql);
-		query.addEntity(BusinessListDetail.class);
+		String hql = " FROM BusinessListDetail WHERE inserDate >='" + operDate + "' and inserDate <= now() ";
+		Query query = createQuery(hql);
 		return (List<BusinessListDetail>) query.list();
 	}
 

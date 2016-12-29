@@ -19,7 +19,7 @@ public class BusinessListDetail {
 	private String id;					//内部唯一流水号
 	private BigDecimal monval;			//面值
 	private Integer records;			//张数
-	private Timestamp inserDate;		//插入时间
+	private Timestamp insertDate;		//插入时间
 	
 	@Id
 	@Column(name = "ID")
@@ -31,11 +31,11 @@ public class BusinessListDetail {
 	}
 	
 	@Column(name = "INSERDATE")
-	public Timestamp getInserDate() {
-		return inserDate;
+	public Timestamp getInsertDate() {
+		return insertDate;
 	}
-	public void setInserDate(Timestamp inserDate) {
-		this.inserDate = inserDate;
+	public void setInsertDate(Timestamp insertDate) {
+		this.insertDate = insertDate;
 	}
 	
 	@Column(name = "MONVAL")

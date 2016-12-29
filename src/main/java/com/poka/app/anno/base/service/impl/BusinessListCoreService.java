@@ -2,7 +2,7 @@ package com.poka.app.anno.base.service.impl;
 
 import java.util.List;
 
-import org.hibernate.SQLQuery;
+import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
 import com.poka.app.anno.enity.BusinessListCore;
@@ -15,23 +15,26 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * 
 	 * @return
 	 */
-	public List<BusinessListCore> getBusinessListCore(String operDate) {
-		String sql = " SELECT * FROM BusinessListCore WHERE inserDate >='" + operDate + "' and inserDate <= now() ";
-		SQLQuery query = this.getBaseDao().getSession().createSQLQuery(sql);
-		query.addEntity(BusinessListCore.class);
-		return (List<BusinessListCore>) query.list();
+	public List<BusinessListCore> getBusinessListCore(String operDate){
+		String hql = " FROM BusinessListCore WHERE insertDate >='" + operDate + "' and insertDate <= now() ";
+		Query query = createQuery(hql);
+		return (List<BusinessListCore>)query.list();
 	}
-
 	/**
 	 * 查询上次同步的完成时间
 	 * 
-	 * @param type 1：核心系统存取款业务信息，2：业务信息券别明细
+	 * @param type
+	 *            1：核心系统存取款业务信息，2：业务信息券别明细
 	 * @return
 	 */
 	public String getFinishDate(int type) {
 		String sql = " SELECT finishdate FROM LANBIAOLOGS WHERE type = " + type;
-		SQLQuery query = this.getBaseDao().getSession().createSQLQuery(sql);
-		return query.toString();
+		String finishdate = (String) this.getBaseDao().getSession().createSQLQuery(sql).uniqueResult();
+		if (null != finishdate) {
+			return finishdate;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -53,7 +56,16 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 */
 	public int updateFinishDate(int type) {
 		String sql = " UPDATE LANBIAOLOGS SET finishdate = now() WHERE type =" + type;
-		return this.getBaseDao().getSession().createQuery(sql).executeUpdate();
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	/**
+	 * 导入ODS传过来的dat文件
+	 */
+	public void importODSData(String filePath) {
+		String sql = "LOAD DATA INFILE '"+filePath+"' REPLACE INTO TABLE ODS FIELDS TERMINATED BY 0x03 LINES TERMINATED BY '\n'";
+		this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+
 	}
 
 }

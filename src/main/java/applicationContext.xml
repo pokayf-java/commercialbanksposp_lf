@@ -212,16 +212,18 @@
 		<property name="startDelay" value="1000" />
 		<!-- repeat every 3600 seconds -->
 		<property name="cronExpression" value="0 10 21 * * ?"></property>
+		
 	</bean>
 	
 	<bean id="doLanBiaoTrigger"
-		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoLanBiaoJobDetail" />
 		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 3600 seconds -->
-		<property name="cronExpression" value="0 10 21 * * ?"></property>
+		<!-- repeat every 3600 seconds 
+		<property name="cronExpression" value="0 9 1 * * ?"></property>-->
+		<property name="repeatInterval" value="300000" />
 	</bean>
 	
 	<bean id="doBagInfoTrigger"

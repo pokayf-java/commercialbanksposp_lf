@@ -20,6 +20,7 @@ public class InitConstant {
 			ConstantUtil.monRuleCZYHFlag = argsConfigUtil.getMonRuleCZYHFlag();
 			ConstantUtil.bagInfoFlag = argsConfigUtil.getBagInfoFlag();
 			ConstantUtil.lanBiaoFlag = argsConfigUtil.getLanBiaoFlag();
+			ConstantUtil.filePath = argsConfigUtil.getFilePath();
 		}
 	}
 }
