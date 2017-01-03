@@ -21,7 +21,7 @@ public class DoBagInfoJob {
 
 	public void work() {
 		
-		if(ConstantUtil.bagInfoFlag.equals("Enabled")){
+		if(ConstantUtil.bagInfoFlag.trim().equals("Enabled")){
 			bagInfoBusiness.sendBagInfo();
 		}
 	}

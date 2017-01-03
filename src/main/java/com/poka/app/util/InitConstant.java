@@ -21,6 +21,10 @@ public class InitConstant {
 			ConstantUtil.bagInfoFlag = argsConfigUtil.getBagInfoFlag();
 			ConstantUtil.lanBiaoFlag = argsConfigUtil.getLanBiaoFlag();
 			ConstantUtil.filePath = argsConfigUtil.getFilePath();
+			ConstantUtil.crProduceFlag = argsConfigUtil.getCrProduceFlag();
+			ConstantUtil.datImportFlag = argsConfigUtil.getDatImportFlag();
+			ConstantUtil.delDatFileFlag = argsConfigUtil.getDelDatFileFlag();
+			
 		}
 	}
 }

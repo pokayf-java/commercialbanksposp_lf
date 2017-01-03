@@ -18,5 +18,8 @@ public class ConstantUtil {
 	public static String sendFileFlag;
 	public static String lanBiaoFlag;
 	public static String filePath;
+	public static String crProduceFlag;
+	public static String datImportFlag;
+	public static String delDatFileFlag;
 	
 }

@@ -3,6 +3,7 @@ package com.poka.app.quartz;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poka.app.anno.bussiness.BankAndNetRepBusiness;
+import com.poka.app.util.ConstantUtil;
 
 /**
  * 执行日结 定时任务类
@@ -19,7 +20,10 @@ public class DoProduceJob {
 	}
 
 	public void work() {
-		bankAndNetRepBussiness.doProduce();
+		if(ConstantUtil.crProduceFlag.trim().equals("Enabled")){
+			bankAndNetRepBussiness.doProduce();
+		}
+		
 	}
 	
 }

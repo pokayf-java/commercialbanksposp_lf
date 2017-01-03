@@ -37,13 +37,13 @@ public class DoPayAppQryJob {
 
 	public void work() {
 		
-		if(ConstantUtil.appointmentFlag.equals("Enabled")){
+		if(ConstantUtil.appointmentFlag.trim().equals("Enabled")){
 			appointmentBussiness.makeAppointment();
 		}
-		if(ConstantUtil.paymentFlag.equals("Enabled")){
+		if(ConstantUtil.paymentFlag.trim().equals("Enabled")){
 			paymentBussiness.makePayment();
 		}
-		if(ConstantUtil.qryApplyFlag.equals("Enabled")){
+		if(ConstantUtil.qryApplyFlag.trim().equals("Enabled")){
 			qryApplyBussiness.makeQryApply();
 		}
 		

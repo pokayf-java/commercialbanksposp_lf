@@ -6,11 +6,11 @@ import com.poka.app.anno.bussiness.LanBiaoBusiness;
 import com.poka.app.util.ConstantUtil;
 
 /**
- * 蓝标业务信息 定时任务类
+ * dat文件导入定时任务类
  * @author lb
  * 
  */
-public class DoLanBiaoJob {
+public class DoDatFileImportJob {
 	
 	private LanBiaoBusiness lanBiaoBusiness;
 	
@@ -20,9 +20,8 @@ public class DoLanBiaoJob {
 	}
 
 	public void work() {
-		if(ConstantUtil.lanBiaoFlag.trim().equals("Enabled")){
-			lanBiaoBusiness.sendBusinessListCoreInfo();
-			lanBiaoBusiness.sendBusinessListDetailInfo();
+		if(ConstantUtil.datImportFlag.trim().equals("Enabled")){
+			lanBiaoBusiness.importODSData();
 		}
 	}
 	

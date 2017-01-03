@@ -102,4 +102,28 @@ public class ArgsConfigUtil {
 	public String getFilePath(){
 		return p.getProperty("filePath");
 	}
+	
+	/**
+	 * 执行日结存储过程开关
+	 * @return
+	 */
+	public String getCrProduceFlag(){
+		return p.getProperty("crProduceFlag");
+	}
+	
+	/**
+	 * dat导入开关
+	 * @return
+	 */
+	public String getDatImportFlag(){
+		return p.getProperty("datImportFlag");
+	}
+	
+	/**
+	 * 删除dat文件开关
+	 * @return
+	 */
+	public String getDelDatFileFlag(){
+		return p.getProperty("delDatFileFlag");
+	}
 }

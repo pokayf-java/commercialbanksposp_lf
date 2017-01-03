@@ -195,6 +195,7 @@ public class BankAndNetRepBusiness {
 	 */
 	public void doProduce() {
 		bankCheckDailyRepService.doProduce();
+		logger.info("日结存储过程执行成功...");
 	}
 
 	/**

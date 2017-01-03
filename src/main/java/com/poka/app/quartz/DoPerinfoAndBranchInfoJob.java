@@ -21,7 +21,7 @@ public class DoPerinfoAndBranchInfoJob {
 
 	public void work() {
 		
-		if(ConstantUtil.perInfoAndBranchInfoFlag.equals("Enabled")){
+		if(ConstantUtil.perInfoAndBranchInfoFlag.trim().equals("Enabled")){
 			perInfoAndBranchInfoBussiness.SendPerinfoAndBranchInfo();
 		}
 		

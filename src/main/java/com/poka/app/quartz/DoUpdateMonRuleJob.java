@@ -22,7 +22,7 @@ public class DoUpdateMonRuleJob {
 
 	public void work() {
 		
-		if(ConstantUtil.monRuleCZYHFlag.equals("Enabled")){
+		if(ConstantUtil.monRuleCZYHFlag.trim().equals("Enabled")){
 			monRuleBussiness.sendMonRuleDataForCZYH();
 		}
 		
