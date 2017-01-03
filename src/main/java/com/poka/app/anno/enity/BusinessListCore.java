@@ -146,7 +146,7 @@ public class BusinessListCore {
 		this.remark = remark;
 	}
 	
-	@Column(name = "INSERDATE")
+	@Column(name = "INSERTDATE")
 	public Timestamp getInsertDate() {
 		return insertDate;
 	}

@@ -16,7 +16,7 @@ public class BusinessListDetailService extends BaseService<BusinessListDetail, S
 	 * @return
 	 */
 	public List<BusinessListDetail> getBusinessListDetail(String operDate) {
-		String hql = " FROM BusinessListDetail WHERE inserDate >='" + operDate + "' and inserDate <= now() ";
+		String hql = " FROM BusinessListDetail WHERE insertDate >='" + operDate + "' and insertDate <= now() ";
 		Query query = createQuery(hql);
 		return (List<BusinessListDetail>) query.list();
 	}

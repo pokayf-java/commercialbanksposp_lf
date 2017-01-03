@@ -30,7 +30,7 @@ public class BusinessListDetail {
 		this.id = id;
 	}
 	
-	@Column(name = "INSERDATE")
+	@Column(name = "INSERTDATE")
 	public Timestamp getInsertDate() {
 		return insertDate;
 	}
