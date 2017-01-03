@@ -2,14 +2,14 @@ package com.poka.app.anno.enity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.poka.app.util.TimestampAdapter;
 
 /**
  * 1.1	核心系统存取款业务信息
@@ -70,10 +70,11 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "BUSINESSDATE")
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getBusinessDate() {
 		return businessDate;
 	}
-	public void setBusinessDate(Timestamp businessDate) {
+	public void setBusinessDate(@XmlJavaTypeAdapter(TimestampAdapter.class)Timestamp businessDate) {
 		this.businessDate = businessDate;
 	}
 	
@@ -150,10 +151,11 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "INSERTDATE")
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getInsertDate() {
 		return insertDate;
 	}
-	public void setInsertDate(Timestamp insertDate) {
+	public void setInsertDate(@XmlJavaTypeAdapter(TimestampAdapter.class)Timestamp insertDate) {
 		this.insertDate = insertDate;
 	}
 	

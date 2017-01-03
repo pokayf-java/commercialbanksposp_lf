@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.poka.app.util.TimestampAdapter;
 
 /**
  * 1.3	业务信息券别明细表
@@ -31,10 +34,11 @@ public class BusinessListDetail {
 	}
 	
 	@Column(name = "INSERTDATE")
+	@XmlJavaTypeAdapter(TimestampAdapter.class)
 	public Timestamp getInsertDate() {
 		return insertDate;
 	}
-	public void setInsertDate(Timestamp insertDate) {
+	public void setInsertDate(@XmlJavaTypeAdapter(TimestampAdapter.class)Timestamp insertDate) {
 		this.insertDate = insertDate;
 	}
 	
