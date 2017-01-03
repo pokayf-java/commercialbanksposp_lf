@@ -1,12 +1,14 @@
 package com.poka.app.anno.enity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 1.3	业务信息券别明细表
@@ -19,7 +21,7 @@ public class BusinessListDetail {
 	private String id;					//内部唯一流水号
 	private BigDecimal monval;			//面值
 	private Integer records;			//张数
-	private Timestamp insertDate;		//插入时间
+	private Date insertDate;		//插入时间
 	
 	@Id
 	@Column(name = "ID")
@@ -31,10 +33,11 @@ public class BusinessListDetail {
 	}
 	
 	@Column(name = "INSERTDATE")
-	public Timestamp getInsertDate() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getInsertDate() {
 		return insertDate;
 	}
-	public void setInsertDate(Timestamp insertDate) {
+	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
 	

@@ -63,6 +63,10 @@ public class LanBiaoBusiness {
 		}
 		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate);
 		if (null != blcList && blcList.size() > 0) {
+			for(BusinessListCore blc:blcList){
+				System.out.println("bDate:"+blc.getBusinessDate());
+				System.out.println("iDate："+blc.getInsertDate());
+			}
 			sendBusinessListCoreInfo(blcList);
 		}else {
 			logger.info("核心业务数据表没有要同步的数据...**"+PokaDateUtil.getNow()+"**");

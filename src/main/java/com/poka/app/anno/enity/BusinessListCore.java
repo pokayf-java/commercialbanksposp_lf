@@ -2,11 +2,14 @@ package com.poka.app.anno.enity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * 1.1	核心系统存取款业务信息
@@ -20,7 +23,7 @@ public class BusinessListCore {
 	private String bankNo;				//银行编号
 	private String netNo;				//网点编号
 	private String userId;				//柜员号
-	private Timestamp businessDate;		//记账时间
+	private Date businessDate;		//记账时间
 	private String businessId;			//核心系统业务流水号
 	private BigDecimal moneyTotal;		//金额
 	private Character inOrOut;			//存取款标志
@@ -31,7 +34,7 @@ public class BusinessListCore {
 	private Character pubOrPri;			//对公对私类型(1:对公 2:对私)
 	private Character channel;			//渠道类型
 	private String remark;				//备注
-	private Timestamp insertDate;		//插入时间
+	private Date insertDate;		//插入时间
 	
 	@Id
 	@Column(name = "ID")
@@ -67,10 +70,11 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "BUSINESSDATE")
-	public Timestamp getBusinessDate() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getBusinessDate() {
 		return businessDate;
 	}
-	public void setBusinessDate(Timestamp businessDate) {
+	public void setBusinessDate(Date businessDate) {
 		this.businessDate = businessDate;
 	}
 	
@@ -147,10 +151,11 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "INSERTDATE")
-	public Timestamp getInsertDate() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getInsertDate() {
 		return insertDate;
 	}
-	public void setInsertDate(Timestamp insertDate) {
+	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
 	
