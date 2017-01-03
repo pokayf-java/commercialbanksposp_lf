@@ -16,6 +16,7 @@ import com.poka.app.enumtype.OrderType;
 import com.poka.app.enumtype.StateType;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.PokaDateUtil;
 
 @Component
 public class QryApplyBusiness {
@@ -60,15 +61,15 @@ public class QryApplyBusiness {
 			try{
 				result = service.makeQryApply(vo);
 			}catch(Exception ex){
-				logger.info("连接服务器失败...");
+				logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
 			}
 			if (result) {
 				
-				logger.info("处理查询申请订单:" + orderId+"  成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+				logger.info("处理查询申请订单:" + orderId+"  成功...**"+PokaDateUtil.getNow()+"**");
 				this.orderInfoService.updateOrderInfoState(order,
 						StateType.SENDED);
 			}else{
-				logger.info("处理查询申请订单:" + orderId+"  失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+				logger.info("处理查询申请订单:" + orderId+"  失败...**"+PokaDateUtil.getNow()+"**");
 			}
 			try {
 				Thread.sleep(50000);

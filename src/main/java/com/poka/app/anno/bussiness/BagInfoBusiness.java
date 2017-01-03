@@ -1,7 +1,5 @@
 package com.poka.app.anno.bussiness;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 /**
  * 横向调拨业务处理
  */
@@ -17,6 +15,7 @@ import com.poka.app.anno.base.service.impl.BagInfoService;
 import com.poka.app.anno.enity.BagInfo;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.PokaDateUtil;
 
 @Component
 public class BagInfoBusiness {
@@ -56,7 +55,7 @@ public class BagInfoBusiness {
 				}
 			}
 		}else{
-			logger.info("无横向调拨订单信息...");
+			logger.info("无横向调拨订单信息...**"+PokaDateUtil.getNow()+"**");
 		}
 		
 	}
@@ -70,14 +69,14 @@ public class BagInfoBusiness {
 		try {
 			result = service.sendBagInfo(list);
 		} catch (Exception ex) {
-			logger.info("连接服务器失败...");
+			logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
 		}
 		if (result) {
 			//同步更新状态
 			bagInfoService.doUpdateOrderStatus(orderId);
-			logger.info("处理横向调拨订单："+orderId+"成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("处理横向调拨订单："+orderId+"成功...**"+PokaDateUtil.getNow()+"**");
 		} else {
-			logger.info("处理横向调拨订单："+orderId+"失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("处理横向调拨订单："+orderId+"失败...**"+PokaDateUtil.getNow()+"**");
 		}
 		try {
 			Thread.sleep(5000);

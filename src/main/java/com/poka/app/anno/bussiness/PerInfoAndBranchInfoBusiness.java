@@ -1,7 +1,5 @@
 package com.poka.app.anno.bussiness;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -19,6 +17,7 @@ import com.poka.app.anno.enity.PerInfo;
 import com.poka.app.anno.enity.PerInfoPK;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.PokaDateUtil;
 
 @Component
 public class PerInfoAndBranchInfoBusiness {
@@ -58,7 +57,7 @@ public class PerInfoAndBranchInfoBusiness {
 		int first = 0;
 		int count = this.perInfoService.getPerinfoCount();
 		if (count <= 0) {
-			logger.info("perinfo size is zero");
+			logger.info("perinfo size is zero...**"+PokaDateUtil.getNow()+"**");
 			return;
 		} else {
 			while (true) {
@@ -85,10 +84,10 @@ public class PerInfoAndBranchInfoBusiness {
 			logger.info("连接服务器失败...");
 		}
 		if (result) {
-			logger.info("perinfodata 信息同步成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("perinfodata 信息同步成功...**"+PokaDateUtil.getNow()+"**");
 			logger.info("共计"+list.size()+"条.");
 		} else {
-			logger.info("处理perinfodata 失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("处理perinfodata 失败...**"+PokaDateUtil.getNow()+"**");
 		}
 		try {
 			Thread.sleep(5000);
@@ -103,7 +102,7 @@ public class PerInfoAndBranchInfoBusiness {
 		int first = 0;
 		int count = this.branchInfoService.getBranchInfoCount();
 		if (count <= 0) {
-			logger.info("branchInfo size is zero");
+			logger.info("branchInfo size is zero...**"+PokaDateUtil.getNow()+"**");
 			return;
 		} else {
 			while (true) {                               
@@ -132,10 +131,10 @@ public class PerInfoAndBranchInfoBusiness {
 			logger.info("连接服务器失败...");
 		}
 		if (result) {
-			logger.info("BranchInfo 信息同步成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("BranchInfo 信息同步成功...**"+PokaDateUtil.getNow()+"**");
 			logger.info("共计"+list.size()+"条.");
 		} else {
-			logger.info("BranchInfo 信息同步失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+			logger.info("BranchInfo 信息同步失败...**"+PokaDateUtil.getNow()+"**");
 		}
 		try {
 			Thread.sleep(5000);
@@ -215,7 +214,7 @@ public class PerInfoAndBranchInfoBusiness {
 			perInfoService.save(tem);
 		}
 		perInfoService.flush();
-		logger.info("机具表数据同步成功！("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+		logger.info("机具表数据同步成功！**"+PokaDateUtil.getNow()+"**");
 		return true;
 	}
 

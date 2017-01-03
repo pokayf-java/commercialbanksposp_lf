@@ -14,6 +14,7 @@ import com.poka.app.anno.enity.BranchInfo;
 import com.poka.app.anno.enity.MonRule;
 import com.poka.app.cb.ws.ICBPospSW;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.PokaDateUtil;
 
 @Component
 public class MonRuleBusiness {
@@ -76,13 +77,13 @@ public class MonRuleBusiness {
 					try {
 						result = service.sendMonRuleDataForCZYH(monRuleList);
 					} catch (Exception ex) {
-						logger.info("连接服务器失败...");
+						logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
 					}
 					if (result) {
-						logger.info("ip:" + branchIp + "可疑币数据同步成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+						logger.info("ip:" + branchIp + "可疑币数据同步成功...**"+PokaDateUtil.getNow()+"**");
 						logger.info("共计" + monRuleList.size() + "条");
 					} else {
-						logger.info("ip:" + branchIp + "可疑币数据同步失败...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+						logger.info("ip:" + branchIp + "可疑币数据同步失败...**"+PokaDateUtil.getNow()+"**");
 					}
 					try {
 						Thread.sleep(5000);

@@ -65,7 +65,7 @@ public class LanBiaoBusiness {
 		if (null != blcList && blcList.size() > 0) {
 			sendBusinessListCoreInfo(blcList);
 		}else {
-			logger.info("核心业务数据表没有要同步的数据...");
+			logger.info("核心业务数据表没有要同步的数据...**"+PokaDateUtil.getNow()+"**");
 		} 
 	}
 
@@ -81,11 +81,11 @@ public class LanBiaoBusiness {
 				logger.info("连接服务器失败...");
 			}
 			if (result) {
-				logger.info("(核心业务数据)BusinessListCore 数据同步成功... ");
+				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **"+PokaDateUtil.getNow()+"**");
 				logger.info("总计： " + dataList.size() + "条.");
 				businessListCoreService.updateFinishDate(1);
 			} else {
-				logger.info("(核心业务数据)BusinessListCore 数据同步失败... ");
+				logger.info("(核心业务数据)BusinessListCore 数据同步失败... **"+PokaDateUtil.getNow()+"**");
 			}
 			try {
 				Thread.sleep(5000);
@@ -109,7 +109,7 @@ public class LanBiaoBusiness {
 		if (null != bldList && bldList.size() > 0) {
 			sendBusinessListDetailInfo(bldList);
 		} else {
-			logger.info("业务信息券别明细表没有要同步的数据...");
+			logger.info("业务信息券别明细表没有要同步的数据...**"+PokaDateUtil.getNow()+"**");
 		} 
 	}
 
@@ -122,14 +122,14 @@ public class LanBiaoBusiness {
 			try {
 				result = service.sendBusinessListDetailInfo(dataList);
 			} catch (Exception ex) {
-				logger.info("连接服务器失败...");
+				logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
 			}
 			if (result) {
-				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... ");
+				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... **"+PokaDateUtil.getNow()+"**");
 				logger.info("总计： " + dataList.size() + "条.");
 				businessListCoreService.updateFinishDate(2);
 			} else {
-				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... ");
+				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... **"+PokaDateUtil.getNow()+"**");
 			}
 			try {
 				Thread.sleep(5000);
@@ -148,7 +148,7 @@ public class LanBiaoBusiness {
 		File file = new File(ConstantUtil.filePath+File.separator+today);
 		File[] tempList = file.listFiles();
 		if(tempList ==null ){
-			logger.info("没有相应的dat文件或文件路径有误...");
+			logger.info("没有相应的dat文件或文件路径有误...**"+PokaDateUtil.getNow()+"**");
 			return;
 		}
 		String fileName = "";
@@ -161,10 +161,10 @@ public class LanBiaoBusiness {
 		}
 		Integer num = businessListCoreService.importODSData(fileName);
 		if(num > 0){
-			logger.info("导入dat数据文件成功...");
+			logger.info("导入dat数据文件成功...**"+PokaDateUtil.getNow()+"**");
 			logger.info("dat文件记录数("+num+")条...");
 		} else {
-			logger.info("导入dat数据文件失败...");
+			logger.info("导入dat数据文件失败...**"+PokaDateUtil.getNow()+"**");
 		}
 		
 	}

@@ -1,5 +1,6 @@
 package com.poka.app.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,6 +31,10 @@ public class PokaDateUtil {
 		
 	}
 	
+	
+	public static String getNow(){
+		 return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+	}
 	public static Date getNextDay(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);

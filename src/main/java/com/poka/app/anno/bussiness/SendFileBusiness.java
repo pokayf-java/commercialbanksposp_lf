@@ -1,7 +1,5 @@
 package com.poka.app.anno.bussiness;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.poka.app.anno.base.service.impl.SendFileService;
 import com.poka.app.anno.enity.SendFile;
+import com.poka.app.util.PokaDateUtil;
 
 @Component
 public class SendFileBusiness {
@@ -31,7 +30,7 @@ public class SendFileBusiness {
 				sendFileService.save(sendFile);
 			}
 		}
-		logger.info("下发到的文件数据同步成功...("+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+")");
+		logger.info("下发到的文件数据同步成功...**"+PokaDateUtil.getNow()+"**");
 		logger.info("共计"+sendFileListData.size()+"条.");
 		return true;
 	}
