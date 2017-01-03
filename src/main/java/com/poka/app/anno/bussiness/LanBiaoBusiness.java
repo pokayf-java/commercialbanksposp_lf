@@ -1,5 +1,8 @@
 package com.poka.app.anno.bussiness;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,6 +17,7 @@ import com.poka.app.anno.enity.BusinessListDetail;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.PokaDateUtil;
 
 /**
  * 蓝标数据同步业务类
@@ -139,7 +143,30 @@ public class LanBiaoBusiness {
 	 * 导入ODS传过来的dat文件
 	 */
 	public void importODSData()	{
-		businessListCoreService.importODSData(ConstantUtil.filePath);
+		
+		String today = new SimpleDateFormat("yyyyMMdd").format(PokaDateUtil.getNextDay(new Date()));
+		File file = new File(ConstantUtil.filePath+File.separator+today);
+		File[] tempList = file.listFiles();
+		if(tempList ==null ){
+			logger.info("没有相应的dat文件或文件路径有误...");
+			return;
+		}
+		String fileName = "";
+		for (int i = 0; i < tempList.length; i++) {
+			if (tempList[i].isFile()) {
+				if(tempList[i].getName().endsWith(".dat")) {
+					fileName = tempList[i].getName();
+				}
+			}
+		}
+		Integer num = businessListCoreService.importODSData(fileName);
+		if(num > 0){
+			logger.info("导入dat数据文件成功...");
+			logger.info("dat文件记录数("+num+")条...");
+		} else {
+			logger.info("导入dat数据文件失败...");
+		}
+		
 	}
 	
 }

@@ -28,7 +28,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @return
 	 */
 	public String getFinishDate(int type) {
-		String sql = " SELECT finishdate FROM LANBIAOLOGS WHERE type = " + type;
+		String sql = " SELECT FINISHDATE FROM LANBIAOLOGS WHERE TYPE = " + type;
 		String finishdate = (String) this.getBaseDao().getSession().createSQLQuery(sql).uniqueResult();
 		if (null != finishdate) {
 			return finishdate;
@@ -44,7 +44,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @return
 	 */
 	public int insertFinishDate(int type) {
-		String sql = " INSERT INTO LANBIAOLOGS (finishdate,type) VALUES (date_sub(now(),interval 1 day)," + type + ")";
+		String sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(now(),interval 1 day)," + type + ")";
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
@@ -55,17 +55,16 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @return
 	 */
 	public int updateFinishDate(int type) {
-		String sql = " UPDATE LANBIAOLOGS SET finishdate = now() WHERE type =" + type;
+		String sql = " UPDATE LANBIAOLOGS SET FINISHDATE = now() WHERE TYPE =" + type;
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
 	/**
 	 * 导入ODS传过来的dat文件
 	 */
-	public void importODSData(String filePath) {
-		String sql = "LOAD DATA INFILE '"+filePath+"' REPLACE INTO TABLE ODS FIELDS TERMINATED BY 0x03 LINES TERMINATED BY '\n'";
-		this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
-
+	public int importODSData(String filePath) {
+		String sql = "LOAD DATA INFILE '"+filePath+"' REPLACE INTO TABLE ODS CHARACTER SET UTF8 FIELDS TERMINATED BY 0x03 LINES TERMINATED BY '\n'";
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
 }
