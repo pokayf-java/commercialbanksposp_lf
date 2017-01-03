@@ -78,7 +78,7 @@ public class LanBiaoBusiness {
 			try {
 				result = service.sendBusinessListCoreInfo(dataList);
 			} catch (Exception ex) {
-				logger.info("连接服务器失败...");
+				logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
 			}
 			if (result) {
 				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **"+PokaDateUtil.getNow()+"**");
