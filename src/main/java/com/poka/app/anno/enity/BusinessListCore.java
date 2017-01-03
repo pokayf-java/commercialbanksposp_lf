@@ -23,7 +23,7 @@ public class BusinessListCore {
 	private String bankNo;				//银行编号
 	private String netNo;				//网点编号
 	private String userId;				//柜员号
-	private Date businessDate;		//记账时间
+	private Timestamp businessDate;		//记账时间
 	private String businessId;			//核心系统业务流水号
 	private BigDecimal moneyTotal;		//金额
 	private Character inOrOut;			//存取款标志
@@ -34,7 +34,7 @@ public class BusinessListCore {
 	private Character pubOrPri;			//对公对私类型(1:对公 2:对私)
 	private Character channel;			//渠道类型
 	private String remark;				//备注
-	private Date insertDate;		//插入时间
+	private Timestamp insertDate;		//插入时间
 	
 	@Id
 	@Column(name = "ID")
@@ -70,11 +70,10 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "BUSINESSDATE")
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getBusinessDate() {
+	public Timestamp getBusinessDate() {
 		return businessDate;
 	}
-	public void setBusinessDate(Date businessDate) {
+	public void setBusinessDate(Timestamp businessDate) {
 		this.businessDate = businessDate;
 	}
 	
@@ -151,11 +150,10 @@ public class BusinessListCore {
 	}
 	
 	@Column(name = "INSERTDATE")
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getInsertDate() {
+	public Timestamp getInsertDate() {
 		return insertDate;
 	}
-	public void setInsertDate(Date insertDate) {
+	public void setInsertDate(Timestamp insertDate) {
 		this.insertDate = insertDate;
 	}
 	
