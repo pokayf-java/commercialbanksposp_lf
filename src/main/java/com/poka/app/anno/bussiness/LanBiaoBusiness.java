@@ -149,7 +149,8 @@ public class LanBiaoBusiness {
 	public void importODSData()	{
 		
 		String today = new SimpleDateFormat("yyyyMMdd").format(PokaDateUtil.getNextDay(new Date()));
-		File file = new File(ConstantUtil.filePath+File.separator+today);
+		String tmpPath = ConstantUtil.filePath+File.separator+today;
+		File file = new File(tmpPath);
 		File[] tempList = file.listFiles();
 		if(tempList ==null ){
 			logger.info("没有相应的dat文件或文件路径有误...**"+PokaDateUtil.getNow()+"**");
@@ -163,7 +164,7 @@ public class LanBiaoBusiness {
 				}
 			}
 		}
-		Integer num = businessListCoreService.importODSData(fileName);
+		Integer num = businessListCoreService.importODSData(tmpPath+File.separator+fileName);
 		if(num > 0){
 			logger.info("导入dat数据文件成功...**"+PokaDateUtil.getNow()+"**");
 			logger.info("dat文件记录数("+num+")条...");
