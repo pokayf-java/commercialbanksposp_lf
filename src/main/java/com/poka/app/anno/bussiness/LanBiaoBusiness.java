@@ -39,7 +39,7 @@ public class LanBiaoBusiness {
 	public void setBusinessListDetailService(BusinessListDetailService businessListDetailService) {
 		this.businessListDetailService = businessListDetailService;
 	}
-	
+
 	@Autowired
 	@Qualifier("businessListCoreService")
 	public void setBusinessListCoreService(BusinessListCoreService businessListCoreService) {
@@ -63,14 +63,14 @@ public class LanBiaoBusiness {
 		}
 		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate);
 		if (null != blcList && blcList.size() > 0) {
-			for(BusinessListCore blc:blcList){
-				System.out.println("bDate:"+blc.getBusinessDate());
-				System.out.println("iDate："+blc.getInsertDate());
+			for (BusinessListCore blc : blcList) {
+				System.out.println("bDate:" + blc.getBusinessDate());
+				System.out.println("iDate：" + blc.getInsertDate());
 			}
 			sendBusinessListCoreInfo(blcList);
-		}else {
-			logger.info("核心业务数据表没有要同步的数据...**"+PokaDateUtil.getNow()+"**");
-		} 
+		} else {
+			logger.info("核心业务数据表没有要同步的数据...**" + PokaDateUtil.getNow() + "**");
+		}
 	}
 
 	public void sendBusinessListCoreInfo(List<BusinessListCore> dataList) {
@@ -82,14 +82,14 @@ public class LanBiaoBusiness {
 			try {
 				result = service.sendBusinessListCoreInfo(dataList);
 			} catch (Exception ex) {
-				logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
+				logger.info("连接服务器失败...**" + PokaDateUtil.getNow() + "**");
 			}
 			if (result) {
-				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **"+PokaDateUtil.getNow()+"**");
+				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **" + PokaDateUtil.getNow() + "**");
 				logger.info("总计： " + dataList.size() + "条.");
 				businessListCoreService.updateFinishDate(1);
 			} else {
-				logger.info("(核心业务数据)BusinessListCore 数据同步失败... **"+PokaDateUtil.getNow()+"**");
+				logger.info("(核心业务数据)BusinessListCore 数据同步失败... **" + PokaDateUtil.getNow() + "**");
 			}
 			try {
 				Thread.sleep(5000);
@@ -98,7 +98,7 @@ public class LanBiaoBusiness {
 			}
 		}
 	}
-	
+
 	/**
 	 * 商行核心业务信息券别明细(BusinessListCore表)同步至人行
 	 */
@@ -113,8 +113,8 @@ public class LanBiaoBusiness {
 		if (null != bldList && bldList.size() > 0) {
 			sendBusinessListDetailInfo(bldList);
 		} else {
-			logger.info("业务信息券别明细表没有要同步的数据...**"+PokaDateUtil.getNow()+"**");
-		} 
+			logger.info("业务信息券别明细表没有要同步的数据...**" + PokaDateUtil.getNow() + "**");
+		}
 	}
 
 	public void sendBusinessListDetailInfo(List<BusinessListDetail> dataList) {
@@ -126,14 +126,14 @@ public class LanBiaoBusiness {
 			try {
 				result = service.sendBusinessListDetailInfo(dataList);
 			} catch (Exception ex) {
-				logger.info("连接服务器失败...**"+PokaDateUtil.getNow()+"**");
+				logger.info("连接服务器失败...**" + PokaDateUtil.getNow() + "**");
 			}
 			if (result) {
-				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... **"+PokaDateUtil.getNow()+"**");
+				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... **" + PokaDateUtil.getNow() + "**");
 				logger.info("总计： " + dataList.size() + "条.");
 				businessListCoreService.updateFinishDate(2);
 			} else {
-				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... **"+PokaDateUtil.getNow()+"**");
+				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... **" + PokaDateUtil.getNow() + "**");
 			}
 			try {
 				Thread.sleep(5000);
@@ -142,36 +142,46 @@ public class LanBiaoBusiness {
 			}
 		}
 	}
-	
+
 	/**
 	 * 导入ODS传过来的dat文件
 	 */
-	public void importODSData()	{
-		
-		String today = new SimpleDateFormat("yyyyMMdd").format(PokaDateUtil.getNextDay(new Date()));
-		String tmpPath = ConstantUtil.filePath+File.separator+today;
-		File file = new File(tmpPath);
-		File[] tempList = file.listFiles();
-		if(tempList ==null ){
-			logger.info("没有相应的dat文件或文件路径有误...**"+PokaDateUtil.getNow()+"**");
-			return;
+	public void importODSData() {
+
+		String finishdate = businessListCoreService.getFinishDate(3);
+		if (null == finishdate || "".equals(finishdate)) {
+			businessListCoreService.insertFinishDate(3);
+			finishdate = businessListCoreService.getFinishDate(3);
 		}
-		String fileName = "";
-		for (int i = 0; i < tempList.length; i++) {
-			if (tempList[i].isFile()) {
-				if(tempList[i].getName().endsWith(".dat")) {
-					fileName = tempList[i].getName();
+		List<String> dateList = PokaDateUtil.getImportDate(finishdate,
+				new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date())));
+		if (null != dateList && dateList.size() > 0) {
+			for (int i = 0; i < dateList.size(); i++) {
+				String tmpPath = ConstantUtil.filePath + File.separator + dateList.get(i).replace("-", "");
+				File file = new File(tmpPath);
+				File[] tempList = file.listFiles();
+				if (tempList == null) {
+					logger.info("没有相应的dat文件或文件路径有误...**" + PokaDateUtil.getNow() + "**");
+					return;
+				}
+				String fileName = "";
+				for (int j = 0; j < tempList.length; j++) {
+					if (tempList[j].isFile()) {
+						if (tempList[j].getName().endsWith(".dat")) {
+							fileName = tempList[j].getName();
+						}
+					}
+				}
+				Integer num = businessListCoreService.importODSData(tmpPath + File.separator + fileName);
+				if (num > 0) {
+					logger.info("导入dat数据文件成功...**" + PokaDateUtil.getNow() + "**");
+					logger.info("dat文件记录数(" + num + ")条...[文件名]---->" + fileName + "<----");
+				} else {
+					logger.info("导入dat数据文件失败...**" + PokaDateUtil.getNow() + "**");
 				}
 			}
 		}
-		Integer num = businessListCoreService.importODSData(tmpPath+File.separator+fileName);
-		if(num > 0){
-			logger.info("导入dat数据文件成功...**"+PokaDateUtil.getNow()+"**");
-			logger.info("dat文件记录数("+num+")条...");
-		} else {
-			logger.info("导入dat数据文件失败...**"+PokaDateUtil.getNow()+"**");
-		}
-		
+
 	}
-	
+
 }
