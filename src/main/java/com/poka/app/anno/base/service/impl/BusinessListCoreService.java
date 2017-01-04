@@ -47,9 +47,9 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	public int insertFinishDate(int type) {
 		String sql = null;
 		if (type == 3) {
-			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(curdate(),interval 1 day)," + type + ")";
+			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(curdate(),interval 2 day)," + type + ")";
 		} else {
-			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(now(),interval 1 day)," + type + ")";
+			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(now(),interval 2 day)," + type + ")";
 		}
 
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
@@ -62,7 +62,12 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @return
 	 */
 	public int updateFinishDate(int type) {
-		String sql = " UPDATE LANBIAOLOGS SET FINISHDATE = now() WHERE TYPE =" + type;
+		String sql = null;
+		if (type == 3) {
+			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = date_sub(curdate(),interval 1 day) WHERE TYPE =" + type;
+		} else {
+			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = date_sub(now(),interval 1 day) WHERE TYPE =" + type;
+		}
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
