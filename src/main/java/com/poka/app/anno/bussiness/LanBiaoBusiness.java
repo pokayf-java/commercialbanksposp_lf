@@ -153,8 +153,9 @@ public class LanBiaoBusiness {
 			businessListCoreService.insertFinishDate(3);
 			finishdate = businessListCoreService.getFinishDate(3);
 		}
-		List<String> dateList = PokaDateUtil.getImportDate(finishdate,
-				new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date())));
+		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date()));
+		List<String> dateList = PokaDateUtil.getImportDate(finishdate,nextDate);
+		int numTmp = 0;
 		if (null != dateList && dateList.size() > 0) {
 			for (int i = 0; i < dateList.size(); i++) {
 				String tmpPath = ConstantUtil.filePath + File.separator + dateList.get(i).replace("-", "");
@@ -175,7 +176,11 @@ public class LanBiaoBusiness {
 				Integer num = businessListCoreService.importODSData(tmpPath + File.separator + fileName);
 				if (num > 0) {
 					logger.info("导入dat数据文件成功...**" + PokaDateUtil.getNow() + "**");
-					logger.info("dat文件记录数(" + num + ")条...[文件名]---->" + fileName + "<----");
+					logger.info("dat文件记录数(" + num + ")条...["+dateList.get(i)+"][文件名]---->" + fileName + "<----");
+					if(numTmp == 0) {
+						businessListCoreService.updateFinishDate(3);
+						numTmp++;
+					}
 				} else {
 					logger.info("导入dat数据文件失败...**" + PokaDateUtil.getNow() + "**");
 				}
