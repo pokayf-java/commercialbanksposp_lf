@@ -67,6 +67,8 @@ public class PokaDateUtil {
 
 	
 	public static void main(String[] args) {
-		System.out.println(PokaDateUtil.getImportDate("2017-01-02", "2017-01-03"));
+		System.out.println(PokaDateUtil.getImportDate("2017-01-02", "2017-01-02"));
+		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date()));
+		System.out.println(nextDate);
 	}
 }

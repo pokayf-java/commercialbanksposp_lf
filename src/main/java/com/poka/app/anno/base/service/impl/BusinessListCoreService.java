@@ -15,8 +15,13 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * 
 	 * @return
 	 */
-	public List<BusinessListCore> getBusinessListCore(String operDate) {
-		String hql = " FROM BusinessListCore WHERE insertDate >='" + operDate + "' and insertDate <= now() ";
+	public String getNowDate(){
+		String sql = " SELECT now() as nowdate";
+		return this.getBaseDao().getSession().createSQLQuery(sql).uniqueResult().toString();
+	}
+	
+	public List<BusinessListCore> getBusinessListCore(String operDate,String nowDate) {
+		String hql = " FROM BusinessListCore WHERE insertDate >='" + operDate + "' and insertDate < '"+nowDate+"'";
 		Query query = createQuery(hql);
 		return (List<BusinessListCore>) query.list();
 	}
@@ -61,12 +66,12 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @param type
 	 * @return
 	 */
-	public int updateFinishDate(int type) {
+	public int updateFinishDate(int type,String nowDate) {
 		String sql = null;
 		if (type == 3) {
 			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = date_sub(curdate(),interval 1 day) WHERE TYPE =" + type;
 		} else {
-			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = date_sub(now(),interval 1 day) WHERE TYPE =" + type;
+			sql = " UPDATE LANBIAOLOGS SET FINISHDATE ='"+nowDate+"' WHERE TYPE =" + type;
 		}
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}

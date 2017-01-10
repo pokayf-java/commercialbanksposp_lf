@@ -56,24 +56,21 @@ public class LanBiaoBusiness {
 	 */
 	public void sendBusinessListCoreInfo() {
 
+		String nowDate = businessListCoreService.getNowDate();
 		String finishdate = businessListCoreService.getFinishDate(1);
 		if (null == finishdate || "".equals(finishdate)) {
 			businessListCoreService.insertFinishDate(1);
 			finishdate = businessListCoreService.getFinishDate(1);
 		}
-		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate);
+		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate, nowDate);
 		if (null != blcList && blcList.size() > 0) {
-			for (BusinessListCore blc : blcList) {
-				System.out.println("bDate:" + blc.getBusinessDate());
-				System.out.println("iDate：" + blc.getInsertDate());
-			}
-			sendBusinessListCoreInfo(blcList);
+			sendBusinessListCoreInfo(blcList, nowDate);
 		} else {
 			logger.info("核心业务数据表没有要同步的数据...**" + PokaDateUtil.getNow() + "**");
 		}
 	}
 
-	public void sendBusinessListCoreInfo(List<BusinessListCore> dataList) {
+	public void sendBusinessListCoreInfo(List<BusinessListCore> dataList, String nowDate) {
 
 		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
 		cxfUtil.recieveTimeOutWrapper(service);
@@ -87,7 +84,7 @@ public class LanBiaoBusiness {
 			if (result) {
 				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **" + PokaDateUtil.getNow() + "**");
 				logger.info("总计： " + dataList.size() + "条.");
-				businessListCoreService.updateFinishDate(1);
+				businessListCoreService.updateFinishDate(1, nowDate);
 			} else {
 				logger.info("(核心业务数据)BusinessListCore 数据同步失败... **" + PokaDateUtil.getNow() + "**");
 			}
@@ -100,24 +97,25 @@ public class LanBiaoBusiness {
 	}
 
 	/**
-	 * 商行核心业务信息券别明细(BusinessListCore表)同步至人行
+	 * 商行核心业务信息券别明细(BusinessListDetail表)同步至人行
 	 */
 	public void sendBusinessListDetailInfo() {
 
+		String nowDate = businessListCoreService.getNowDate();
 		String finishdate = businessListCoreService.getFinishDate(2);
 		if (null == finishdate || "".equals(finishdate)) {
 			businessListCoreService.insertFinishDate(2);
 			finishdate = businessListCoreService.getFinishDate(2);
 		}
-		List<BusinessListDetail> bldList = businessListDetailService.getBusinessListDetail(finishdate);
+		List<BusinessListDetail> bldList = businessListDetailService.getBusinessListDetail(finishdate, nowDate);
 		if (null != bldList && bldList.size() > 0) {
-			sendBusinessListDetailInfo(bldList);
+			sendBusinessListDetailInfo(bldList, nowDate);
 		} else {
 			logger.info("业务信息券别明细表没有要同步的数据...**" + PokaDateUtil.getNow() + "**");
 		}
 	}
 
-	public void sendBusinessListDetailInfo(List<BusinessListDetail> dataList) {
+	public void sendBusinessListDetailInfo(List<BusinessListDetail> dataList, String nowDate) {
 
 		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
 		cxfUtil.recieveTimeOutWrapper(service);
@@ -131,7 +129,7 @@ public class LanBiaoBusiness {
 			if (result) {
 				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... **" + PokaDateUtil.getNow() + "**");
 				logger.info("总计： " + dataList.size() + "条.");
-				businessListCoreService.updateFinishDate(2);
+				businessListCoreService.updateFinishDate(2, nowDate);
 			} else {
 				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... **" + PokaDateUtil.getNow() + "**");
 			}
@@ -154,7 +152,7 @@ public class LanBiaoBusiness {
 			finishdate = businessListCoreService.getFinishDate(3);
 		}
 		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date()));
-		List<String> dateList = PokaDateUtil.getImportDate(finishdate,nextDate);
+		List<String> dateList = PokaDateUtil.getImportDate(finishdate, nextDate);
 		int numTmp = 0;
 		if (null != dateList && dateList.size() > 0) {
 			for (int i = 0; i < dateList.size(); i++) {
@@ -176,9 +174,9 @@ public class LanBiaoBusiness {
 				Integer num = businessListCoreService.importODSData(tmpPath + File.separator + fileName);
 				if (num > 0) {
 					logger.info("导入dat数据文件成功...**" + PokaDateUtil.getNow() + "**");
-					logger.info("dat文件记录数(" + num + ")条...["+dateList.get(i)+"][文件名]---->" + fileName + "<----");
-					if(numTmp == 0) {
-						businessListCoreService.updateFinishDate(3);
+					logger.info("dat文件记录数(" + num + ")条...[" + dateList.get(i) + "][文件名]---->" + fileName + "<----");
+					if (numTmp == 0) {
+						businessListCoreService.updateFinishDate(3, null);
 						numTmp++;
 					}
 				} else {
