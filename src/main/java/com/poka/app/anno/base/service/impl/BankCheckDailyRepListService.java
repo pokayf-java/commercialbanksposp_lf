@@ -29,7 +29,7 @@ public class BankCheckDailyRepListService extends BaseService<BankCheckDailyRepL
 	 * 执行日结存储过程
 	 */
 	public void doProduce() {
-		String sql = "{call P_CHECKDAYREP('')}";
+		String sql = "{CALL P_CHECKDAYREP('')}";
 		SQLQuery query = this.getBaseDao().getSession().createSQLQuery(sql);
 		query.executeUpdate();
 

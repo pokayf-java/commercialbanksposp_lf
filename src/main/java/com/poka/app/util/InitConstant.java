@@ -24,6 +24,8 @@ public class InitConstant {
 			ConstantUtil.crProduceFlag = argsConfigUtil.getCrProduceFlag();
 			ConstantUtil.datImportFlag = argsConfigUtil.getDatImportFlag();
 			ConstantUtil.delDatFileFlag = argsConfigUtil.getDelDatFileFlag();
+			ConstantUtil.cdiProduceFlag = argsConfigUtil.getCdiProduceFlag();
+			ConstantUtil.tjProduceFlag = argsConfigUtil.getTjProduceFlag();
 			
 		}
 	}

@@ -140,6 +140,8 @@
 	<bean id="doBagInfoJob" class="com.poka.app.quartz.DoBagInfoJob"></bean>
 	<bean id="doLanBiaoJob" class="com.poka.app.quartz.DoLanBiaoJob"></bean>
 	<bean id="doDatFileImportJob" class="com.poka.app.quartz.DoDatFileImportJob"></bean>
+	<bean id="doLBTJDatImportJob" class="com.poka.app.quartz.DoLBTJDatImportJob"></bean>
+	<bean id="doCoreDataImportJob" class="com.poka.app.quartz.DoCoreDataImportJob"></bean>
 	
 	<!-- 定义调用对象和调用对象的方法 -->
 
@@ -147,6 +149,18 @@
 	<bean id="jobDoPayAppQryDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="doPayAppQryJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoLBTJDatImportDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doLBTJDatImportJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoCoreDataImportDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doCoreDataImportJob" />
 		<property name="targetMethod" value="work" />
 	</bean>
 	
@@ -211,6 +225,24 @@
 		<property name="repeatInterval" value="300000" />
 	</bean>
 	
+	<bean id="doLBTJDatImportTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoLBTJDatImportDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="300000" />
+	</bean>
+	
+	<bean id="doCoreDataImportTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoCoreDataImportDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="300000" />
+	</bean>
+	
 	<bean id="doBankAndNetRepTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<!-- see the example of method invoking job above -->
@@ -230,7 +262,7 @@
 		<property name="startDelay" value="1000" />
 		<!-- repeat every 3600 seconds 
 		<property name="cronExpression" value="0 9 1 * * ?"></property>-->
-		<property name="repeatInterval" value="300000" />
+		<property name="repeatInterval" value="60000" />
 	</bean>
 	
 	<bean id="doDatFileImportTrigger"
@@ -307,6 +339,8 @@
 				<ref bean="doBagInfoTrigger"/>
 				<ref bean="doLanBiaoTrigger"/>
 				<ref bean="doDatFileImportTrigger"/>
+				<ref bean="doCoreDataImportTrigger"/>
+				<ref bean="doLBTJDatImportTrigger"/>
 			</list>
 		</property>
 		<property name="jobFactory">

@@ -1,5 +1,6 @@
 package com.poka.app.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,12 +36,19 @@ public class PokaDateUtil {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
 
-	public static Date getNextDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-		date = calendar.getTime();
-		return date;
+	public static String getLastDayStr(String date) {
+		try {
+			Date nowDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(nowDate);
+			calendar.add(Calendar.DAY_OF_MONTH, -1);
+			nowDate = calendar.getTime();
+			return new SimpleDateFormat("yyyy-MM-dd").format(nowDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "Exception";
+		}
+
 	}
 
 	public static List<String> getImportDate(String beginDate, String stopDate) {
@@ -65,10 +73,9 @@ public class PokaDateUtil {
 
 	}
 
-	
 	public static void main(String[] args) {
-		System.out.println(PokaDateUtil.getImportDate("2017-01-02", "2017-01-02"));
-		String nextDate = new SimpleDateFormat("yyyy-MM-dd").format(PokaDateUtil.getNextDay(new Date()));
-		System.out.println(nextDate);
+//		System.out.println(PokaDateUtil.getImportDate("2016-01-01", PokaDateUtil.getLastDayStr("2017-01-10")).size());
+		System.out.println(getMoreDate(30));
+
 	}
 }

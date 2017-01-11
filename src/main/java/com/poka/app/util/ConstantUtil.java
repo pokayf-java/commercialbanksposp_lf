@@ -7,7 +7,6 @@ package com.poka.app.util;
  *
  */
 public class ConstantUtil {
-
 	public static String appointmentFlag;
 	public static String paymentFlag;
 	public static String qryApplyFlag;
@@ -21,5 +20,6 @@ public class ConstantUtil {
 	public static String crProduceFlag;
 	public static String datImportFlag;
 	public static String delDatFileFlag;
-	
+	public static String cdiProduceFlag;
+	public static String tjProduceFlag;
 }

@@ -112,6 +112,21 @@ public class ArgsConfigUtil {
 	}
 	
 	/**
+	 * 核心数据分析存储过程执行开关
+	 * @return
+	 */
+	public String getCdiProduceFlag(){
+		return p.getProperty("cdiProduceFlag");
+	}
+	/**
+	 * 执行核心劵别数据分析存储过程开关
+	 * @return
+	 */
+	public String getTjProduceFlag(){
+		return p.getProperty("tjProduceFlag");
+	}
+	
+	/**
 	 * dat导入开关
 	 * @return
 	 */

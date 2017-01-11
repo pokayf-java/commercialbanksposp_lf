@@ -11,17 +11,30 @@ import com.poka.app.anno.enity.BusinessListCore;
 public class BusinessListCoreService extends BaseService<BusinessListCore, String> {
 
 	/**
-	 * 查询核心业务数据
+	 * 获取数据库日期
 	 * 
+	 * @param type
 	 * @return
 	 */
-	public String getNowDate(){
-		String sql = " SELECT now() as nowdate";
+	public String getNowDate(Integer type) {
+		String sql = "";
+		if (type == 1) {
+			sql = " SELECT now() as nowdatetime";
+		} else if (type == 2) {
+			sql = " SELECT curdate() as nowdate";
+		}
 		return this.getBaseDao().getSession().createSQLQuery(sql).uniqueResult().toString();
 	}
-	
-	public List<BusinessListCore> getBusinessListCore(String operDate,String nowDate) {
-		String hql = " FROM BusinessListCore WHERE insertDate >='" + operDate + "' and insertDate < '"+nowDate+"'";
+
+	/**
+	 * * 查询核心业务数据
+	 * 
+	 * @param operDate
+	 * @param nowDate
+	 * @return
+	 */
+	public List<BusinessListCore> getBusinessListCore(String operDate, String nowDate) {
+		String hql = " FROM BusinessListCore WHERE insertDate >='" + operDate + "' and insertDate < '" + nowDate + "'";
 		Query query = createQuery(hql);
 		return (List<BusinessListCore>) query.list();
 	}
@@ -39,7 +52,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 		if (null != finishdate) {
 			return finishdate;
 		} else {
-			return null;
+			return "";
 		}
 	}
 
@@ -51,7 +64,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 */
 	public int insertFinishDate(int type) {
 		String sql = null;
-		if (type == 3) {
+		if (type >= 3) {
 			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(curdate(),interval 2 day)," + type + ")";
 		} else {
 			sql = " INSERT INTO LANBIAOLOGS (FINISHDATE,TYPE) VALUES (date_sub(now(),interval 2 day)," + type + ")";
@@ -66,22 +79,65 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * @param type
 	 * @return
 	 */
-	public int updateFinishDate(int type,String nowDate) {
+	public int updateFinishDate(int type, String nowDate) {
 		String sql = null;
-		if (type == 3) {
-			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = date_sub(curdate(),interval 1 day) WHERE TYPE =" + type;
+		if (type >= 3) {
+			sql = " UPDATE LANBIAOLOGS SET FINISHDATE = '" + nowDate + "'WHERE TYPE =" + type;
 		} else {
-			sql = " UPDATE LANBIAOLOGS SET FINISHDATE ='"+nowDate+"' WHERE TYPE =" + type;
+			sql = " UPDATE LANBIAOLOGS SET FINISHDATE ='" + nowDate + "' WHERE TYPE =" + type;
 		}
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
 	/**
 	 * 导入ODS传过来的dat文件
+	 * 
+	 * @param filePath
+	 *            文件路径
 	 */
 	public int importODSData(String filePath) {
 		String sql = "LOAD DATA INFILE '" + filePath
 				+ "' REPLACE INTO TABLE ODS CHARACTER SET UTF8 FIELDS TERMINATED BY 0x03 LINES TERMINATED BY '\n'";
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	/**
+	 * 删除旧的库存ods数据
+	 * 
+	 * @return
+	 */
+	public int deleteOldODSData(String date) {
+		String sql = " DELETE FROM ODS WHERE ODS_SRC_DT <= '" + date + "'";
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	/**
+	 * 执行将ods表转换为businesscore_list表数据
+	 */
+	public int doImportCoreDatPro(String date) {
+		String sql = " {CALL P_ImportCoreData('" + date + "')}";
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	/**
+	 * 执行生成businesscore_detail表数据
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public int doLBTJPro(String date) {
+		String sql = " {CALL P_LBTJ('" + date + "')}";
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
+
+	/**
+	 * 删除临时表
+	 * 
+	 * @param tmpTable
+	 * @return
+	 */
+	public int doDeleteTmpTable(String tmpTable) {
+		String sql = "DROP TEMPORARY TABLE IF EXISTS " + tmpTable;
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
