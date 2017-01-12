@@ -78,7 +78,7 @@ public class LanBiaoBusiness {
 			}
 			if (result) {
 				logger.info("(核心业务数据)BusinessListCore 数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
-				logger.info("总计： " + dataList.size() + "条.");
+				logger.info("总计：[ " + dataList.size() + "]条.");
 				businessListCoreService.updateFinishDate(1, nowDateTime);
 			} else {
 				logger.info("(核心业务数据)BusinessListCore 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
@@ -119,7 +119,7 @@ public class LanBiaoBusiness {
 			}
 			if (result) {
 				logger.info("(业务信息券别明细)BusinessListDetail 数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
-				logger.info("总计： " + dataList.size() + "条.");
+				logger.info("总计： [" + dataList.size() + "]条.");
 				businessListCoreService.updateFinishDate(2, nowDateTime);
 			} else {
 				logger.info("(业务信息券别明细)BusinessListDetail 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
@@ -141,7 +141,7 @@ public class LanBiaoBusiness {
 		List<String> dateList = PokaDateUtil.getImportDate(finishdate, PokaDateUtil.getLastDayStr(nowDate));
 		if (null != dateList && dateList.size() > 0) {
 			Integer deleteSize = businessListCoreService.deleteOldODSData(PokaDateUtil.getLastDayStr(nowDate));
-			logger.info("删除ODS表历史记录...**共计：" + deleteSize + "条.**");
+			logger.info("删除ODS表历史记录...**共计：[" + deleteSize + "]条.**");
 			for (int i = 0; i < dateList.size(); i++) {
 				String tmpPath = ConstantUtil.filePath + File.separator + dateList.get(i).replace("-", "");
 				File file = new File(tmpPath);
@@ -169,7 +169,7 @@ public class LanBiaoBusiness {
 				Integer num = businessListCoreService.importODSData(tmpPath + File.separator + fileName);
 				if (num > 0) {
 					logger.info("导入dat数据文件成功...**" + PokaDateUtil.getNow() + "**");
-					logger.info("dat文件记录数(" + num + ")条...[" + dateList.get(i) + "][文件名]---->" + fileName + "<----");
+					logger.info("dat文件记录数[" + num + "]条...[" + dateList.get(i) + "][文件名]---->" + fileName + "<----");
 					businessListCoreService.updateFinishDate(3, dateList.get(i));
 					createSucFile(tmpPath);
 				} else {

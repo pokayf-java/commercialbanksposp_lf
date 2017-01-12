@@ -141,4 +141,6 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
 
+	
+
 }
