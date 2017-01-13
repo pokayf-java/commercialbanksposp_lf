@@ -11,11 +11,14 @@ import org.springframework.stereotype.Component;
 
 import com.poka.app.anno.base.service.impl.BusinessListCoreService;
 import com.poka.app.anno.base.service.impl.BusinessListDetailService;
+import com.poka.app.anno.base.service.impl.ShuaKaJiLuService;
 import com.poka.app.anno.enity.BusinessListCore;
 import com.poka.app.anno.enity.BusinessListDetail;
+import com.poka.app.anno.enity.ShuaKaJiLu;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
+import com.poka.app.util.FileUtil;
 import com.poka.app.util.PokaDateUtil;
 
 /**
@@ -30,9 +33,16 @@ public class LanBiaoBusiness {
 	Logger logger = Logger.getLogger(LanBiaoBusiness.class);
 	private BusinessListCoreService businessListCoreService;
 	private BusinessListDetailService businessListDetailService;
+	private ShuaKaJiLuService shuaKaJiLuService;
 
 	private CxfUtil cxfUtil;
 
+	@Autowired
+	@Qualifier("shuaKaJiLuService")
+	public void setShuaKaJiLuService(ShuaKaJiLuService shuaKaJiLuService) {
+		this.shuaKaJiLuService = shuaKaJiLuService;
+	}
+	
 	@Autowired
 	@Qualifier("businessListDetailService")
 	public void setBusinessListDetailService(BusinessListDetailService businessListDetailService) {
@@ -51,10 +61,53 @@ public class LanBiaoBusiness {
 	}
 
 	/**
+	 * 商行刷卡记录数据(shuaKaJiLu表)同步至人行
+	 */
+	public void sendShuaKaJiLuInfo() {
+
+		String nowDateTime = businessListCoreService.getNowDate(1);
+		String finishdate = getFinishDate(0);
+		List<ShuaKaJiLu> skjlList = shuaKaJiLuService.getShuaKaJiLu(finishdate, nowDateTime);
+		if (null != skjlList && skjlList.size() > 0) {
+			sendShuaKaJiLuInfo(skjlList, nowDateTime);
+		} else {
+			logger.info("刷卡记录表没有要同步的数据...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+		}
+	}
+	
+	public void sendShuaKaJiLuInfo(List<ShuaKaJiLu> dataList, String nowDateTime) {
+
+		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
+		cxfUtil.recieveTimeOutWrapper(service);
+		boolean result = Boolean.FALSE;
+		if (null != dataList && dataList.size() > 0) {
+			try {
+				result = service.sendShuaKaJiLuInfo(dataList);
+			} catch (Exception ex) {
+				logger.info("连接服务器失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+			}
+			if (result) {
+				logger.info("(刷卡记录)shuaKaJiLu数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+				logger.info("总计：[ " + dataList.size() + "]条.");
+				businessListCoreService.updateFinishDate(0, nowDateTime);
+			} else {
+				logger.info("(刷卡记录)shuaKaJiLu 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+			}
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
 	 * 商行核心业务数据(BusinessListCore表)同步至人行
+	 * 
 	 */
 	public void sendBusinessListCoreInfo() {
-
+		
 		String nowDateTime = businessListCoreService.getNowDate(1);
 		String finishdate = getFinishDate(1);
 		List<BusinessListCore> blcList = businessListCoreService.getBusinessListCore(finishdate, nowDateTime);
@@ -95,7 +148,6 @@ public class LanBiaoBusiness {
 	 * 商行核心业务信息券别明细(BusinessListDetail表)同步至人行
 	 */
 	public void sendBusinessListDetailInfo() {
-
 		String nowDateTime = businessListCoreService.getNowDate(1);
 		String finishdate = getFinishDate(2);
 		List<BusinessListDetail> bldList = businessListDetailService.getBusinessListDetail(finishdate, nowDateTime);
@@ -236,6 +288,7 @@ public class LanBiaoBusiness {
 		}
 		return finishdate;
 	}
+	
 	/**
 	 * 生成success.log文件
 	 * @param path
@@ -255,7 +308,29 @@ public class LanBiaoBusiness {
 				e.printStackTrace();
 			}
 		}
-
 	}
-
+	
+	/**
+	 * @param
+	 * 删除dat文件
+	 * 
+	 */
+	public void deleteDatFile() {
+		List<String> dateList = PokaDateUtil.getMoreDate(31);
+		if (null != dateList && dateList.size() > 0) {
+			for (int i = 0; i < dateList.size(); i++) {
+				String tmpPath = ConstantUtil.filePath + File.separator + dateList.get(i).replace("-", "");
+				File file=new File(tmpPath + File.separator + "success.log");
+				if(file.exists()){
+					if(FileUtil.delFolder(tmpPath)) {
+						logger.info("日期：["+dateList.get(i)+"] dat文件成功删除...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+					}
+				}else {
+					logger.info("日期：["+dateList.get(i)+"]无符合条件的dat文件可以删除...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+				}
+			}
+		} else {
+			logger.info("无符合条件的dat文件可以删除...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+		}
+	}
 }

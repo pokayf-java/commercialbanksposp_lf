@@ -142,6 +142,7 @@
 	<bean id="doDatFileImportJob" class="com.poka.app.quartz.DoDatFileImportJob"></bean>
 	<bean id="doLBTJDatImportJob" class="com.poka.app.quartz.DoLBTJDatImportJob"></bean>
 	<bean id="doCoreDataImportJob" class="com.poka.app.quartz.DoCoreDataImportJob"></bean>
+	<bean id="doDatFileDeleteJob" class="com.poka.app.quartz.DoDatFileDeleteJob"></bean>
 	
 	<!-- 定义调用对象和调用对象的方法 -->
 
@@ -173,6 +174,12 @@
 	<bean id="jobDoDatFileImportDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="doDatFileImportJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoDatFileDeleteDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doDatFileDeleteJob" />
 		<property name="targetMethod" value="work" />
 	</bean>
 	
@@ -223,6 +230,17 @@
 		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
 		<property name="repeatInterval" value="300000" />
+	</bean>
+	
+	
+	<bean id="doDelDatFileTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="jobDoDatFileDeleteDetail" />
+		<!-- 1 seconds -->
+		<property name="startDelay" value="1000" />
+		<!--  <property name="cronExpression" value="0 15 10 L * ?"></property>-->
+		<property name="repeatInterval" value="60000" />
 	</bean>
 	
 	<bean id="doLBTJDatImportTrigger"
@@ -341,6 +359,7 @@
 				<ref bean="doDatFileImportTrigger"/>
 				<ref bean="doCoreDataImportTrigger"/>
 				<ref bean="doLBTJDatImportTrigger"/>
+				<ref bean="doDelDatFileTrigger"/>
 			</list>
 		</property>
 		<property name="jobFactory">

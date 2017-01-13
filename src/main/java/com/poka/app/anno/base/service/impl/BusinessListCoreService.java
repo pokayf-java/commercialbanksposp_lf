@@ -140,7 +140,16 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 		String sql = "DROP TEMPORARY TABLE IF EXISTS " + tmpTable;
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
-
 	
+	/**
+	 * 创建临时表
+	 * 
+	 * @param tmpTable
+	 * @return
+	 */
+	public int doCreateTmpTable(String tmpTable) {
+		String sql = "CREATE TEMPORARY TABLE IF EXISTS " + tmpTable;
+		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
+	}
 
 }
