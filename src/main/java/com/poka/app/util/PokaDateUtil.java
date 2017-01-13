@@ -7,8 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class PokaDateUtil {
 
+	
+	Logger logger = Logger.getLogger(PokaDateUtil.class);
 	/**
 	 * 获取当前日期的前sum天
 	 * 
@@ -74,8 +78,5 @@ public class PokaDateUtil {
 	}
 
 	public static void main(String[] args) {
-//		System.out.println(PokaDateUtil.getImportDate("2016-01-01", PokaDateUtil.getLastDayStr("2017-01-10")).size());
-		System.out.println(getMoreDate(30));
-
 	}
 }
