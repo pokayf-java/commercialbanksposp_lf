@@ -3,7 +3,6 @@ package com.poka.app.vo;
 import java.io.Serializable;
 import java.util.List;
 
-
 import com.poka.app.anno.enity.PayBag;
 import com.poka.app.anno.enity.PayBundle;
 import com.poka.app.anno.enity.PayOrder;
