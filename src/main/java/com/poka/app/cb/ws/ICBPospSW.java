@@ -19,31 +19,38 @@ import com.poka.app.vo.AppointmenResult;
 @WebService
 public interface ICBPospSW {
 
+	/*预约取款*/
 	@WebMethod(operationName = "handleAppointmen")
 	@WebResult(name = "result")
 	public boolean handleAppointmen(@WebParam(name = "appointment") AppointmenResult appointment);
-
+	
+	/*黑名单规则*/
 	@WebMethod(operationName = "sendMonRuleData")
 	@WebResult(name = "result")
 	public boolean sendMonRuleData(@WebParam(name = "monRuleList") List<MonRule> monRuleList);
 	
+	/*黑名单规则(CZYH)*/
 	@WebMethod(operationName = "sendMonRuleDataForCZYH")
 	@WebResult(name = "result")
 	public boolean sendMonRuleDataForCZYH(@WebParam(name = "monRuleList") List<MonRule> monRuleList);
 
+	/*机具信息*/
 	@WebMethod(operationName = "getPerInfoData")
 	@WebResult(name = "result")
 	public boolean getPerInfoData(@WebParam(name = "listData") String listData);
 
+	/*网点信息*/
 	@WebMethod(operationName = "getBanchInfoData")
 	@WebResult(name = "result")
 	public boolean getBanchInfoData(@WebParam(name = "listData") String listData);
 
+	/*网点日结*/
 	@WebMethod(operationName = "sendNetCheckDailyRep")
 	@WebResult(name = "result")
 	public boolean sendNetCheckDailyRepBak(
 			@WebParam(name = "netCheckDailyRepList") List<NetCheckDailyRep> netCheckDailyRepList);
 
+	/*银行日结*/
 	@WebMethod(operationName = "sendBankCheckDailyRep")
 	@WebResult(name = "result")
 	public boolean sendBankCheckDailyRepBak(
