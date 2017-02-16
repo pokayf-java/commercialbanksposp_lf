@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 
 import com.poka.app.anno.base.service.impl.BusinessListCoreService;
 import com.poka.app.anno.base.service.impl.BusinessListDetailService;
-import com.poka.app.anno.base.service.impl.ShuaKaJiLuService;
 import com.poka.app.anno.enity.BusinessListCore;
 import com.poka.app.anno.enity.BusinessListDetail;
-import com.poka.app.anno.enity.ShuaKaJiLu;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
@@ -33,15 +31,15 @@ public class LanBiaoBusiness {
 	Logger logger = Logger.getLogger(LanBiaoBusiness.class);
 	private BusinessListCoreService businessListCoreService;
 	private BusinessListDetailService businessListDetailService;
-	private ShuaKaJiLuService shuaKaJiLuService;
+//	private ShuaKaJiLuService shuaKaJiLuService;
 
 	private CxfUtil cxfUtil;
 
-	@Autowired
-	@Qualifier("shuaKaJiLuService")
-	public void setShuaKaJiLuService(ShuaKaJiLuService shuaKaJiLuService) {
-		this.shuaKaJiLuService = shuaKaJiLuService;
-	}
+//	@Autowired
+//	@Qualifier("shuaKaJiLuService")
+//	public void setShuaKaJiLuService(ShuaKaJiLuService shuaKaJiLuService) {
+//		this.shuaKaJiLuService = shuaKaJiLuService;
+//	}
 	
 	@Autowired
 	@Qualifier("businessListDetailService")
@@ -60,46 +58,46 @@ public class LanBiaoBusiness {
 		this.cxfUtil = cxfUtil;
 	}
 
-	/**
-	 * 商行刷卡记录数据(shuaKaJiLu表)同步至人行
-	 */
-	public void sendShuaKaJiLuInfo() {
-
-		String nowDateTime = businessListCoreService.getNowDate(1);
-		String finishdate = getFinishDate(0);
-		List<ShuaKaJiLu> skjlList = shuaKaJiLuService.getShuaKaJiLu(finishdate, nowDateTime);
-		if (null != skjlList && skjlList.size() > 0) {
-			sendShuaKaJiLuInfo(skjlList, nowDateTime);
-		} else {
-			logger.info("刷卡记录表没有要同步的数据...**[执行时间：" + PokaDateUtil.getNow() + "]**");
-		}
-	}
-	
-	public void sendShuaKaJiLuInfo(List<ShuaKaJiLu> dataList, String nowDateTime) {
-
-		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
-		cxfUtil.recieveTimeOutWrapper(service);
-		boolean result = Boolean.FALSE;
-		if (null != dataList && dataList.size() > 0) {
-			try {
-				result = service.sendShuaKaJiLuInfo(dataList);
-			} catch (Exception ex) {
-				logger.info("连接服务器失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
-			}
-			if (result) {
-				logger.info("(刷卡记录)shuaKaJiLu数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
-				logger.info("总计：[ " + dataList.size() + "]条.");
-				businessListCoreService.updateFinishDate(0, nowDateTime);
-			} else {
-				logger.info("(刷卡记录)shuaKaJiLu 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
-			}
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	/**
+//	 * 商行刷卡记录数据(shuaKaJiLu表)同步至人行
+//	 */
+//	public void sendShuaKaJiLuInfo() {
+//
+//		String nowDateTime = businessListCoreService.getNowDate(1);
+//		String finishdate = getFinishDate(0);
+//		List<ShuaKaJiLu> skjlList = shuaKaJiLuService.getShuaKaJiLu(finishdate, nowDateTime);
+//		if (null != skjlList && skjlList.size() > 0) {
+//			sendShuaKaJiLuInfo(skjlList, nowDateTime);
+//		} else {
+//			logger.info("刷卡记录表没有要同步的数据...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+//		}
+//	}
+//	
+//	public void sendShuaKaJiLuInfo(List<ShuaKaJiLu> dataList, String nowDateTime) {
+//
+//		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
+//		cxfUtil.recieveTimeOutWrapper(service);
+//		boolean result = Boolean.FALSE;
+//		if (null != dataList && dataList.size() > 0) {
+//			try {
+//				result = service.sendShuaKaJiLuInfo(dataList);
+//			} catch (Exception ex) {
+//				logger.info("连接服务器失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+//			}
+//			if (result) {
+//				logger.info("(刷卡记录)shuaKaJiLu数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+//				logger.info("总计：[ " + dataList.size() + "]条.");
+//				businessListCoreService.updateFinishDate(0, nowDateTime);
+//			} else {
+//				logger.info("(刷卡记录)shuaKaJiLu 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+//			}
+//			try {
+//				Thread.sleep(5000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	
 	/**

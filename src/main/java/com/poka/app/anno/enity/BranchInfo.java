@@ -1,5 +1,7 @@
 package com.poka.app.anno.enity;
 
+
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -7,7 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
-
+/**
+ * 
+ *  网点信息
+ * @author lb
+ *
+ */
 @Entity
 @Table(name = "BRANCHINFO")
 @IdClass(value = BranchInfoPK.class)

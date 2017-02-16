@@ -10,8 +10,11 @@ import javax.jws.WebService;
 import com.poka.app.anno.enity.BagInfo;
 import com.poka.app.anno.enity.BankCheckDailyRep;
 import com.poka.app.anno.enity.BankCheckDailyRepList;
+import com.poka.app.anno.enity.BundleInfo;
 import com.poka.app.anno.enity.BusinessListCore;
 import com.poka.app.anno.enity.BusinessListDetail;
+import com.poka.app.anno.enity.MonBoxAddMon;
+import com.poka.app.anno.enity.MoneyOut;
 import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
 import com.poka.app.anno.enity.QryApply;
@@ -92,5 +95,20 @@ public interface IPBPospSW {
 	@WebMethod(operationName = "sendShuaKaJiLuInfo")
 	@WebResult(name = "result")
 	public boolean sendShuaKaJiLuInfo(@WebParam(name = "sendShuaKaJiLuList") List<ShuaKaJiLu> sendShuaKaJiLuList);
+	
+	/* 网点配钞 */
+	@WebMethod(operationName = "sendMoneyOutInfo")
+	@WebResult(name = "result")
+	public boolean sendMoneyOutInfo(@WebParam(name = "sendMoneyOutInfoList") List<MoneyOut> sendMoneyOutInfoList);
+	
+	/* 钞箱加钞 */
+	@WebMethod(operationName = "sendMonBoxAddMonInfo")
+	@WebResult(name = "result")
+	public boolean sendMonBoxAddMonInfo(@WebParam(name = "sendMonBoxAddMonInfoList") List<MonBoxAddMon> sendMonBoxAddMonInfoList);
+	
+	/* ATM加钞  */
+	@WebMethod(operationName = "sendBundleInfo")
+	@WebResult(name = "result")
+	public boolean sendBundleInfo(@WebParam(name = "sendBundleInfoList") List<BundleInfo> sendBundleInfoList);
 
 }

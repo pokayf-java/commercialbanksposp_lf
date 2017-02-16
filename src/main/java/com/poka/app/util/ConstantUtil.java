@@ -22,4 +22,8 @@ public class ConstantUtil {
 	public static String delDatFileFlag;
 	public static String cdiProduceFlag;
 	public static String tjProduceFlag;
+	public static String netPeiChaoFlag;
+	public static String chaoXJiaChaoFlag;
+	public static String atmJiaChaoFlag;
+	
 }

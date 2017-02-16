@@ -55,7 +55,7 @@ public class BagInfoBusiness {
 				}
 			}
 		}else{
-			logger.info("无横向调拨订单信息...**"+PokaDateUtil.getNow()+"**");
+			logger.info("无横向调拨订单信息...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 		}
 		
 	}
@@ -74,9 +74,9 @@ public class BagInfoBusiness {
 		if (result) {
 			//同步更新状态
 			bagInfoService.doUpdateOrderStatus(orderId);
-			logger.info("处理横向调拨订单："+orderId+"成功...**"+PokaDateUtil.getNow()+"**");
+			logger.info("处理横向调拨订单："+orderId+"成功...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 		} else {
-			logger.info("处理横向调拨订单："+orderId+"失败...**"+PokaDateUtil.getNow()+"**");
+			logger.info("处理横向调拨订单："+orderId+"失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 		}
 		try {
 			Thread.sleep(5000);

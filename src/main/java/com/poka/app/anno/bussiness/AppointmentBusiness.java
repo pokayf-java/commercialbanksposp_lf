@@ -66,11 +66,11 @@ public class AppointmentBusiness {
 			}
 			if (result) {
 				
-				logger.info("处理預約取款订单:" + orderId+"  成功...**"+PokaDateUtil.getNow()+"**");
+				logger.info("处理預約取款订单:" + orderId+"  成功...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 				this.orderInfoService.updateOrderInfoState(order,
 						StateType.SENDED);
 			}else{
-				logger.info("处理預約取款订单:" + orderId+"  失败...**"+PokaDateUtil.getNow()+"**");
+				logger.info("处理預約取款订单:" + orderId+"  失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 			}
 			try {
 				Thread.sleep(50000);

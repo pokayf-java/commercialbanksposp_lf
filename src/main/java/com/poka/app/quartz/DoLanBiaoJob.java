@@ -7,23 +7,24 @@ import com.poka.app.util.ConstantUtil;
 
 /**
  * 蓝标业务信息 定时任务类
+ * 
  * @author lb
  * 
  */
 public class DoLanBiaoJob {
-	
+
 	private LanBiaoBusiness lanBiaoBusiness;
-	
+
 	@Autowired
 	public void setLanBiaoBusiness(LanBiaoBusiness lanBiaoBusiness) {
 		this.lanBiaoBusiness = lanBiaoBusiness;
 	}
 
 	public void work() {
-		if(ConstantUtil.lanBiaoFlag.trim().equals("Enabled")){
+		if (ConstantUtil.lanBiaoFlag.trim().equals("Enabled")) {
 			lanBiaoBusiness.sendBusinessListDetailInfo();
 			lanBiaoBusiness.sendBusinessListCoreInfo();
 		}
 	}
-	
+
 }

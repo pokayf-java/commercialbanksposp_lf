@@ -26,6 +26,9 @@ public class InitConstant {
 			ConstantUtil.delDatFileFlag = argsConfigUtil.getDelDatFileFlag();
 			ConstantUtil.cdiProduceFlag = argsConfigUtil.getCdiProduceFlag();
 			ConstantUtil.tjProduceFlag = argsConfigUtil.getTjProduceFlag();
+			ConstantUtil.netPeiChaoFlag = argsConfigUtil.getNetPeiChaoFlag();
+			ConstantUtil.atmJiaChaoFlag = argsConfigUtil.getAtmJiaChaoFlag();
+			ConstantUtil.chaoXJiaChaoFlag = argsConfigUtil.getChaoXJiaChaoFlag();
 			
 		}
 	}

@@ -18,8 +18,13 @@ public class DoPayAppQryJob {
 	AppointmentBusiness appointmentBussiness;
 	PaymentBusiness paymentBussiness;
 	QryApplyBusiness qryApplyBussiness;
+//	private ATMJiaChBusiness aTMJiaChBusiness;
 	
-
+//	@Autowired
+//	public void setATMJiaChBusiness(ATMJiaChBusiness aTMJiaChBusiness) {
+//		this.aTMJiaChBusiness = aTMJiaChBusiness;
+//	}
+	
 	@Autowired
 	public void setPaymentBussiness(PaymentBusiness paymentBussiness) {
 		this.paymentBussiness = paymentBussiness;
@@ -39,6 +44,7 @@ public class DoPayAppQryJob {
 		
 		if(ConstantUtil.appointmentFlag.trim().equals("Enabled")){
 			appointmentBussiness.makeAppointment();
+//			aTMJiaChBusiness.sendMoneyOutList();
 		}
 		if(ConstantUtil.paymentFlag.trim().equals("Enabled")){
 			paymentBussiness.makePayment();

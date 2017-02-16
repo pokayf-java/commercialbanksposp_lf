@@ -141,4 +141,28 @@ public class ArgsConfigUtil {
 	public String getDelDatFileFlag(){
 		return p.getProperty("delDatFileFlag");
 	}
+	
+	/**
+	 * 网点配钞开关
+	 * @return
+	 */
+	public String getNetPeiChaoFlag(){
+		return p.getProperty("netPeiChaoFlag");
+	}
+	
+	/**
+	 * 钞箱加钞开关
+	 * @return
+	 */
+	public String getChaoXJiaChaoFlag(){
+		return p.getProperty("chaoXJiaChaoFlag");
+	}
+	
+	/**
+	 * ATM加钞开关
+	 * @return
+	 */
+	public String getAtmJiaChaoFlag(){
+		return p.getProperty("atmJiaChaoFlag");
+	}
 }

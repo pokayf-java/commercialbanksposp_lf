@@ -174,8 +174,8 @@ public class BusinessListCore {
 	public void setZhaiYoms(String zhaiYoms) {
 		this.zhaiYoms = zhaiYoms;
 	}
-	
-	@Column(name = "ACCOUNTTYPE",length = 2)
+
+	@Column(name = "ACCOUNTTYPE", length = 2)
 	public String getAccountType() {
 		return accountType;
 	}

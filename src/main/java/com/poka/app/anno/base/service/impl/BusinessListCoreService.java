@@ -43,7 +43,8 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 * 查询上次同步的完成时间
 	 * 
 	 * @param type
-	 *            1：核心系统存取款业务信息，2：业务信息券别明细
+	 *            1：核心系统存取款业务信息，2：业务信息券别明细,3:导入ODS传过来的dat文件,4:P_ImportCoreData,
+	 *            5:执行存储过程P_LBTJ,6:网点配钞信息,7:钞箱加钞信息，8：ATM加钞
 	 * @return
 	 */
 	public String getFinishDate(int type) {
@@ -140,7 +141,7 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 		String sql = "DROP TEMPORARY TABLE IF EXISTS " + tmpTable;
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}
-	
+
 	/**
 	 * 创建临时表
 	 * 

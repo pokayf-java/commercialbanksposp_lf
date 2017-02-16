@@ -143,6 +143,9 @@
 	<bean id="doLBTJDatImportJob" class="com.poka.app.quartz.DoLBTJDatImportJob"></bean>
 	<bean id="doCoreDataImportJob" class="com.poka.app.quartz.DoCoreDataImportJob"></bean>
 	<bean id="doDatFileDeleteJob" class="com.poka.app.quartz.DoDatFileDeleteJob"></bean>
+	<bean id="doNetPeiChaoJob" class="com.poka.app.quartz.DoNetPeiChaoJob"></bean>
+	<bean id="doAtmJiaChaoJob" class="com.poka.app.quartz.DoAtmJiaChaoJob"></bean>
+	<bean id="doChaoXJiaChaoJob" class="com.poka.app.quartz.DoChaoXJiaChaoJob"></bean>
 	
 	<!-- 定义调用对象和调用对象的方法 -->
 
@@ -150,6 +153,24 @@
 	<bean id="jobDoPayAppQryDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="doPayAppQryJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoAtmJiaChaoDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doAtmJiaChaoJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoChaoXJiaChaoDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doChaoXJiaChaoJob" />
+		<property name="targetMethod" value="work" />
+	</bean>
+	
+	<bean id="jobDoNetPeiChaoDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="doNetPeiChaoJob" />
 		<property name="targetMethod" value="work" />
 	</bean>
 	
@@ -220,105 +241,105 @@
 	</bean>
 
 	<!-- 定义触发时间  SimpleTriggerFactoryBean-->
-	<!--  "0 0 12 * * ?" 每天中午12点触发 -->
-	<!--"0 15 10 ? * *" 每天上午10:15触发 -->
-	<!--"0 15 10 * * ?" 每天上午10:15触发-->
 	<bean id="doPayAppQryTrigger"
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoPayAppQryDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<property name="repeatInterval" value="300000" />
+		<property name="repeatInterval" value="600000" />
 	</bean>
 	
-	
 	<bean id="doDelDatFileTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoDatFileDeleteDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!--  <property name="cronExpression" value="0 15 10 L * ?"></property>-->
-		<property name="repeatInterval" value="60000" />
+		<!-- 每月最后一天的7点执行 -->
+		<property name="cronExpression" value="0 0 7 L * ?"></property>
+	</bean>
+	
+	<bean id="doDatFileImportTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDoDatFileImportDetail" />
+		<property name="startDelay" value="1000" />
+		<!-- 每天的凌晨2点执行 -->
+		<property name="cronExpression" value="0 0 2 * * ?"></property>
 	</bean>
 	
 	<bean id="doLBTJDatImportTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoLBTJDatImportDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<property name="repeatInterval" value="300000" />
+		<!-- 每天的凌晨5点执行 -->
+		<property name="cronExpression" value="0 0 5 * * ?"></property>
 	</bean>
 	
 	<bean id="doCoreDataImportTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoCoreDataImportDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<property name="repeatInterval" value="300000" />
+		<!-- 每天的凌晨4点执行 -->
+		<property name="cronExpression" value="0 0 4 * * ?"></property>
+	</bean>
+	
+	<bean id="doNetPeiChaoTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDoNetPeiChaoDetail" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="30000" />
+		<!-- 每天的凌晨4点执行 
+		<property name="cronExpression" value="0 0 4 * * ?"></property>-->
+	</bean>
+	
+	<bean id="doAtmJiaChaoTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDoAtmJiaChaoDetail" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="30000" />
+		<!-- 每天的凌晨4点执行 
+		<property name="cronExpression" value="0 0 4 * * ?"></property>-->
+	</bean>
+	
+	<bean id="doChaoXJiaChaoTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="jobDoChaoXJiaChaoDetail" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="30000" />
+		<!-- 每天的凌晨4点执行 
+		<property name="cronExpression" value="0 0 4 * * ?"></property>-->
 	</bean>
 	
 	<bean id="doBankAndNetRepTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobBankAndNetRepDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 3600 seconds -->
-		<property name="cronExpression" value="0 10 21 * * ?"></property>
-		
+		<property name="cronExpression" value="0 0 1 * * ?"></property>
 	</bean>
 	
 	<bean id="doLanBiaoTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoLanBiaoDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 3600 seconds 
-		<property name="cronExpression" value="0 9 1 * * ?"></property>-->
-		<property name="repeatInterval" value="60000" />
-	</bean>
-	
-	<bean id="doDatFileImportTrigger"
-		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
-		<property name="jobDetail" ref="jobDoDatFileImportDetail" />
-		<!-- 1 seconds -->
-		<property name="startDelay" value="1000" />
-		<!-- repeat every 3600 seconds 
-		<property name="cronExpression" value="0 9 1 * * ?"></property>-->
-		<property name="repeatInterval" value="300000" />
-	</bean>
+		<!-- 每天的凌晨8点执行 -->
+		<property name="cronExpression" value="0 0 8 * * ?"></property>
+	</bean> 
 	
 	<bean id="doBagInfoTrigger"
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoBagInfoDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<!-- repeat every 60*10 seconds -->
-		<property name="repeatInterval" value="300000" />
-		
+		<property name="repeatInterval" value="600000" />
 	</bean>
 	
 	<bean id="doDelLogsTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoDelLogsDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
-		<property name="cronExpression" value="0 15 10 L * ?"></property>
+		<!-- 每月最后一天的凌晨2点执行 -->
+		<property name="cronExpression" value="0 0 2 L * ?"></property>
 	</bean>
 	
 	<bean id="doProTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoProDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
 		<!-- 每天凌晨一点执行 -->
 		<property name="cronExpression" value="0 0 1 * * ?"></property>
@@ -326,9 +347,7 @@
 	
 	<bean id="doUpdateMonTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobDoUpdateMonDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
 		<!-- 每天凌晨四点执行 -->
 		<property name="cronExpression" value="0 0 4 * * ?"></property>
@@ -336,12 +355,10 @@
 	
 	<bean id="dopbTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<!-- see the example of method invoking job above -->
 		<property name="jobDetail" ref="jobPbDetail" />
-		<!-- 1 seconds -->
 		<property name="startDelay" value="1000" />
 		<!-- 每天凌晨一点执行 -->
-		<property name="cronExpression" value="0 20 18 * * ?"></property>
+		<property name="cronExpression" value="0 0 1 * * ?"></property>
 	</bean>
 	
 	<bean id="startQuertz" lazy-init="false" autowire="no"
@@ -360,6 +377,9 @@
 				<ref bean="doCoreDataImportTrigger"/>
 				<ref bean="doLBTJDatImportTrigger"/>
 				<ref bean="doDelDatFileTrigger"/>
+				<ref bean="doNetPeiChaoTrigger"/>
+				<ref bean="doAtmJiaChaoTrigger"/>
+				<ref bean="doChaoXJiaChaoTrigger"/>
 			</list>
 		</property>
 		<property name="jobFactory">
