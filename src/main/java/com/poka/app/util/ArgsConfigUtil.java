@@ -99,8 +99,29 @@ public class ArgsConfigUtil {
 	/**
 	 * dat文件存放路径
 	 */
-	public String getFilePath(){
-		return p.getProperty("filePath");
+	public String getDatFilePath(){
+		return p.getProperty("datFilePath");
+	}
+	
+	/**
+	 * ZT文件存放路径
+	 */
+	public String getZtFilePath(){
+		return p.getProperty("ztFilePath");
+	}
+	
+	/**
+	 * 解析zt文件开关
+	 */
+	public String getZtFileFlag(){
+		return p.getProperty("ztFileFlag");
+	}
+	
+	/**
+	 * ZT文件备份路径
+	 */
+	public String getZtFileBakPath(){
+		return p.getProperty("ztFileBakPath");
 	}
 	
 	/**

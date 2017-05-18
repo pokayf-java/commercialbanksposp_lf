@@ -97,7 +97,8 @@ public class BusinessListCoreService extends BaseService<BusinessListCore, Strin
 	 *            文件路径
 	 */
 	public int importODSData(String filePath) {
-		String sql = "LOAD DATA INFILE '" + filePath
+//		String sql = "LOAD DATA INFILE '" + filePath
+		String sql = "LOAD DATA LOCAL INFILE '" + filePath
 				+ "' REPLACE INTO TABLE ODS CHARACTER SET UTF8 FIELDS TERMINATED BY 0x03 LINES TERMINATED BY '\n'";
 		return this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 	}

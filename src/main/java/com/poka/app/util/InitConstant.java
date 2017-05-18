@@ -20,7 +20,10 @@ public class InitConstant {
 			ConstantUtil.monRuleCZYHFlag = argsConfigUtil.getMonRuleCZYHFlag();
 			ConstantUtil.bagInfoFlag = argsConfigUtil.getBagInfoFlag();
 			ConstantUtil.lanBiaoFlag = argsConfigUtil.getLanBiaoFlag();
-			ConstantUtil.filePath = argsConfigUtil.getFilePath();
+			ConstantUtil.datFilePath = argsConfigUtil.getDatFilePath();
+			ConstantUtil.ztFilePath = argsConfigUtil.getZtFilePath();
+			ConstantUtil.ztFileFlag = argsConfigUtil.getZtFileFlag();
+			ConstantUtil.ztFileBakPath = argsConfigUtil.getZtFileBakPath();
 			ConstantUtil.crProduceFlag = argsConfigUtil.getCrProduceFlag();
 			ConstantUtil.datImportFlag = argsConfigUtil.getDatImportFlag();
 			ConstantUtil.delDatFileFlag = argsConfigUtil.getDelDatFileFlag();

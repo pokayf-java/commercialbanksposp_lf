@@ -3,6 +3,7 @@ package com.poka.app.quartz;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poka.app.anno.bussiness.BagInfoBusiness;
+import com.poka.app.anno.bussiness.ZhengKunqkBusiness;
 import com.poka.app.util.ConstantUtil;
 
 /**
@@ -18,9 +19,8 @@ public class DoBagInfoJob {
 	public void setBagInfoBusiness(BagInfoBusiness bagInfoBusiness) {
 		this.bagInfoBusiness = bagInfoBusiness;
 	}
-
+	
 	public void work() {
-		
 		if(ConstantUtil.bagInfoFlag.trim().equals("Enabled")){
 			bagInfoBusiness.sendBagInfo();
 		}

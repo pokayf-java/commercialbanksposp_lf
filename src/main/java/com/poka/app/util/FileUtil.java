@@ -1,6 +1,9 @@
 package com.poka.app.util;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtil {
 
@@ -87,4 +90,33 @@ public class FileUtil {
 		}
 		return flag;
 	}
+
+	/**
+	 * 获取指定路径下的指定文件类型（如.ZT）
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static List<String> getFileList(File file) {
+		List<String> result = new ArrayList<String>();
+		if (!file.isDirectory()) {
+			System.out.println(file.getAbsolutePath());
+			result.add(file.getAbsolutePath());
+		} else {
+			File[] directoryList = file.listFiles(new FileFilter() {
+				public boolean accept(File file) {
+					if (file.isFile() && file.getName().indexOf("ZT") > -1) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			});
+			for (int i = 0; i < directoryList.length; i++) {
+				result.add(directoryList[i].getPath());
+			}
+		}
+		return result;
+	}
+
 }

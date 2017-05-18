@@ -39,6 +39,10 @@ public class PokaDateUtil {
 	public static String getNow() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
+	
+	public static String getDate() {
+		return new SimpleDateFormat("yyyyMMdd").format(new Date());
+	}
 
 	public static String getLastDayStr(String date) {
 		try {
