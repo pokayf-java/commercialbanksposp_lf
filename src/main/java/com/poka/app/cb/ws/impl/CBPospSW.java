@@ -7,11 +7,13 @@ import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poka.app.anno.bussiness.AppointmentBusiness;
+import com.poka.app.anno.bussiness.BagInfoBusiness;
 import com.poka.app.anno.bussiness.BankAndNetRepBusiness;
 import com.poka.app.anno.bussiness.GzhQueryBusiness;
 import com.poka.app.anno.bussiness.MonRuleBusiness;
 import com.poka.app.anno.bussiness.PerInfoAndBranchInfoBusiness;
 import com.poka.app.anno.bussiness.SendFileBusiness;
+import com.poka.app.anno.enity.BagInfo;
 import com.poka.app.anno.enity.BankCheckDailyRep;
 import com.poka.app.anno.enity.BankCheckDailyRepList;
 import com.poka.app.anno.enity.MonRule;
@@ -30,6 +32,12 @@ public class CBPospSW implements ICBPospSW {
 	private PerInfoAndBranchInfoBusiness perInfoAndBranchInfoBussiness;
 	private BankAndNetRepBusiness bankAndNetRepBusiness;
 	private SendFileBusiness sendFileBusiness;
+	private BagInfoBusiness bagInfoBusiness;
+
+	@Autowired
+	public void setBagInfoBusiness(BagInfoBusiness bagInfoBusiness) {
+		this.bagInfoBusiness = bagInfoBusiness;
+	}
 	
 	/* 冠字号查询  start*/
 	private GzhQueryBusiness gzhQueryBusiness;
@@ -147,6 +155,12 @@ public class CBPospSW implements ICBPospSW {
 	public List<MoneyDataInfo> selectGZHData(String mon) {
 		// TODO Auto-generated method stub
 		return gzhQueryBusiness.queryGzhList(mon);
+	}
+
+	@Override
+	public boolean sendBagInfoData(List<BagInfo> bagInfoList) {
+		// TODO Auto-generated method stub
+		return bagInfoBusiness.insertBagInfo(bagInfoList);
 	}
 
 }

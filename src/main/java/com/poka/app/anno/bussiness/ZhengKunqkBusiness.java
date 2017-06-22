@@ -22,7 +22,7 @@ import com.poka.app.util.FileUtil;
 import com.poka.app.util.PokaDateUtil;
 
 /**
- * 整捆取款
+ * 整捆取款文件解析
  * 
  * @author Administrator
  *
