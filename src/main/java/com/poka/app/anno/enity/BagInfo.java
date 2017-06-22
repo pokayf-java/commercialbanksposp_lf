@@ -24,6 +24,8 @@ public class BagInfo implements Serializable {
 	private String bagCheckId;
 	private String bundleCode;
 	private Date bundleDate;
+	private String writeStatus;
+	private String putStatus;
 	
 	
 	@Id
@@ -86,5 +88,19 @@ public class BagInfo implements Serializable {
 	public void setBundleDate(Date bundleDate) {
 		this.bundleDate = bundleDate;
 	}
-
+	@Column(name = "writeStatus")
+	public String getWriteStatus() {
+		return writeStatus;
+	}
+	public void setWriteStatus(String writeStatus) {
+		this.writeStatus = writeStatus;
+	}
+	
+	@Column(name = "putStatus")
+	public String getPutStatus() {
+		return putStatus;
+	}
+	public void setPutStatus(String putStatus) {
+		this.putStatus = putStatus;
+	}
 }

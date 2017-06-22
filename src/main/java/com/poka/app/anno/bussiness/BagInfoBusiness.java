@@ -102,7 +102,7 @@ public class BagInfoBusiness {
 				bagInfoService.save(bagInfo);
 			}
 		}
-		logger.info("取款数据同步成功(" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + ")");
+		logger.info("取款数据同步成功(" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + ")--->共计["+listSize+"] 条");
 		return true;
 	}
 }
