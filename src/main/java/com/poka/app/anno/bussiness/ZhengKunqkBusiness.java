@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.poka.app.anno.base.service.impl.WithDrawInfoService;
 import com.poka.app.anno.enity.WithDrawInfo;
+import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
 import com.poka.app.util.FileUtil;
@@ -64,6 +65,7 @@ public class ZhengKunqkBusiness {
 					String tmpDate = null;
 					int recordsNum = 0;
 					int repeatNum = 0;
+					List<WithDrawInfo> withDrawInfoList = new ArrayList<WithDrawInfo>();
 					while ((tempString = br.readLine()) != null) {
 						String bundleId = tempString.substring(0, 24).trim();
 						String accountNo = tempString.substring(51, 76).trim();
@@ -83,11 +85,16 @@ public class ZhengKunqkBusiness {
 							tmpDate = tempString.substring(24, 34).trim().replace("-", "");
 							recordsNum++;
 							accountNoList.add(bundleId);
+							withDrawInfoList.add(withDrawInfo);
 						} else {
 							repeatNum++;
 						}
 					}
 					br.close();
+					
+					//同步整捆取款信息至人行
+					sendWithDrawInfoInfo(withDrawInfoList);
+					
 					logger.info("ZT文件[" + fileName + "]处理成功...合计[" + recordsNum + "]条...**[执行时间："
 							+ PokaDateUtil.getNow() + "]**");
 					logger.info("ZT文件[" + fileName + "]去重捆条码...合计[" + repeatNum + "]条...**[执行时间："
@@ -114,7 +121,34 @@ public class ZhengKunqkBusiness {
 			}
 		}
 	}
-
+	
+	/**
+	 * 整捆取款信息
+	 * @param dataList
+	 */
+	public void sendWithDrawInfoInfo(List<WithDrawInfo> dataList) {
+		IPBPospSW service = cxfUtil.getCxfClient(IPBPospSW.class, cxfUtil.getUrl());
+		cxfUtil.recieveTimeOutWrapper(service);
+		boolean result = Boolean.FALSE;
+		if (null != dataList && dataList.size() > 0) {
+			try {
+				result = service.sendWithDrawInfoInfo(dataList);
+			} catch (Exception ex) {
+				logger.info("连接服务器失败...**[执行时间：" + PokaDateUtil.getNow() + "]**");
+			}
+			if (result) {
+				logger.info("(整捆取款数据)WithDrawInfo 数据同步成功... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+				logger.info("总计：[" + dataList.size() + "]条.");
+			} else {
+				logger.info("(整捆取款数据)WithDrawInfo 数据同步失败... **[执行时间：" + PokaDateUtil.getNow() + "]**");
+			}
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * @param 删除zt文件
 	 * 
@@ -132,4 +166,6 @@ public class ZhengKunqkBusiness {
 			logger.info("无符合条件的zt文件可以删除...**[执行时间：" + PokaDateUtil.getNow() + "]**");
 		}
 	}
+	
+	
 }

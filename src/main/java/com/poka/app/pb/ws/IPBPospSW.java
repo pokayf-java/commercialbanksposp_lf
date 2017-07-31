@@ -19,6 +19,7 @@ import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
 import com.poka.app.anno.enity.QryApply;
 import com.poka.app.anno.enity.ShuaKaJiLu;
+import com.poka.app.anno.enity.WithDrawInfo;
 import com.poka.app.vo.AppointmentVo;
 import com.poka.app.vo.PaymentVo;
 
@@ -90,6 +91,12 @@ public interface IPBPospSW {
 	@WebResult(name = "result")
 	public boolean sendBusinessListDetailInfo(
 			@WebParam(name = "businessListDetailList") List<BusinessListDetail> businessListDetailList);
+	
+	/* 整捆取款信息 */
+	@WebMethod(operationName = "sendWithDrawInfoInfo")
+	@WebResult(name = "result")
+	public boolean sendWithDrawInfoInfo(
+			@WebParam(name = "withDrawInfoList") List<WithDrawInfo> withDrawInfoList);
 
 	/* 刷卡记录 */
 	@WebMethod(operationName = "sendShuaKaJiLuInfo")
