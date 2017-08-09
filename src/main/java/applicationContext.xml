@@ -282,8 +282,8 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoLBTJDatImportDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨6点执行 -->
-		<property name="cronExpression" value="0 0 6 * * ?"></property>
+		<!-- 每天的凌晨5点半执行 -->
+		<property name="cronExpression" value="0 30 5 * * ?"></property>
 	</bean>
 	
 	<bean id="doCoreDataImportTrigger"
