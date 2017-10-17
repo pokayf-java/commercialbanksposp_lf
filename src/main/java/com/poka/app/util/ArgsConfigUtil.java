@@ -186,4 +186,15 @@ public class ArgsConfigUtil {
 	public String getAtmJiaChaoFlag(){
 		return p.getProperty("atmJiaChaoFlag");
 	}
+	
+	/**
+	 * 廊坊兴业银行代理功能开关
+	 * 2017年9月19日
+	 * @author Enma.ai
+	 * @return String
+	 * @return
+	 */
+	public String getCibAgencyFlag(){
+		return p.getProperty("cibAgencyFlag");
+	}
 }

@@ -32,6 +32,7 @@ public class InitConstant {
 			ConstantUtil.netPeiChaoFlag = argsConfigUtil.getNetPeiChaoFlag();
 			ConstantUtil.atmJiaChaoFlag = argsConfigUtil.getAtmJiaChaoFlag();
 			ConstantUtil.chaoXJiaChaoFlag = argsConfigUtil.getChaoXJiaChaoFlag();
+			ConstantUtil.cibAgencyFlag = argsConfigUtil.getCibAgencyFlag();
 			
 		}
 	}

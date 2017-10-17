@@ -28,5 +28,6 @@ public class ConstantUtil {
 	public static String netPeiChaoFlag;
 	public static String chaoXJiaChaoFlag;
 	public static String atmJiaChaoFlag;
+	public static String cibAgencyFlag;
 	
 }

@@ -77,7 +77,21 @@ public class BaseDao<T, PK extends Serializable> implements IBaseDao<T, PK> {
 	public void save(final T entity) {
 		getSession().saveOrUpdate(entity);
 	}
-
+	
+	/**
+	 * 批量保存List
+	 */
+	public void saveLosts(List<T> list) {
+		int i = 0;
+		for (T o : list) {
+			save(o);
+			if (i % 20 == 0) {
+				flush();
+				clear();
+			}
+		}
+	}
+	
 	/**
 	 * 删除对象.
 	 * 
@@ -320,6 +334,10 @@ public class BaseDao<T, PK extends Serializable> implements IBaseDao<T, PK> {
 	 */
 	public void flush() {
 		getSession().flush();
+	}
+	
+	public void clear() {
+		getSession().clear();
 	}
 
 	/**

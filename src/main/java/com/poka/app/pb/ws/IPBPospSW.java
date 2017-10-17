@@ -19,6 +19,7 @@ import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
 import com.poka.app.anno.enity.QryApply;
 import com.poka.app.anno.enity.ShuaKaJiLu;
+import com.poka.app.anno.enity.TAgencyCheck;
 import com.poka.app.anno.enity.WithDrawInfo;
 import com.poka.app.vo.AppointmentVo;
 import com.poka.app.vo.PaymentVo;
@@ -26,6 +27,11 @@ import com.poka.app.vo.PaymentVo;
 @WebService
 public interface IPBPospSW {
 
+	/* 代理取款同步 */
+	@WebMethod(operationName = "agencyCheck")
+	@WebResult(name = "result")
+	public boolean agencyCheck(@WebParam(name = "checks") List<TAgencyCheck> checks);
+	
 	/* 预约取款 */
 	@WebMethod(operationName = "makeAppointmen")
 	@WebResult(name = "result")
