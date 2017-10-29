@@ -22,8 +22,8 @@ public class DoBankAndNetRepJob {
 	public void work() {
 		
 		if(ConstantUtil.bankAndNetRepFlag.equals("Enabled")){
-			bankAndNetRepBussiness.sendBankCheckRepList();
-			bankAndNetRepBussiness.sendNetCheckRepList();
+//			bankAndNetRepBussiness.sendBankCheckRepList();
+//			bankAndNetRepBussiness.sendNetCheckRepList();
 			bankAndNetRepBussiness.sendNetCheckRepListFlow();
 			bankAndNetRepBussiness.sendBankCheckRepListFlow();
 			

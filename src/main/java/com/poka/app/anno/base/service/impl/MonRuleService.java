@@ -12,7 +12,7 @@ import com.poka.app.anno.enity.MonRule;
 public class MonRuleService extends BaseService<MonRule, String> {
 	
 	public List<MonRule> getMonRuleList(){
-		String hql = "from MonRule";
+		String hql = "FROM MonRule";
 		Query query = createQuery(hql);
 		return (List<MonRule>)query.list();
 	}

@@ -8,12 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.poka.app.util.TimestampAdapter;
 
-/**
- * 
- * 
- * @author Administrator
- *
- */
+
 public class BundleInfoPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;

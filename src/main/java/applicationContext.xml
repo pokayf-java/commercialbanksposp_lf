@@ -260,6 +260,7 @@
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoCIBAgencyJobDetail" />
 		<property name="startDelay" value="1000" />
+		<!-- 每600秒执行一次 -->
 		<property name="repeatInterval" value="600000" />
 	</bean>
 	
@@ -267,6 +268,7 @@
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<property name="jobDetail" ref="jobZhKunqkDetail" />
 		<property name="startDelay" value="1000" />
+		<!-- 每600秒执行一次 -->
 		<property name="repeatInterval" value="600000" />
 	</bean>
 	
@@ -274,6 +276,7 @@
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoPayAppQryDetail" />
 		<property name="startDelay" value="1000" />
+		<!-- 每600秒执行一次 -->
 		<property name="repeatInterval" value="600000" />
 	</bean>
 	
@@ -289,24 +292,24 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoDatFileImportDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨4点执行 -->
-		<property name="cronExpression" value="0 0 4 * * ?"></property>
+		<!-- 每天的凌晨6点执行 -->
+		<property name="cronExpression" value="0 0 6 * * ?"></property>
 	</bean>
 	
 	<bean id="doLBTJDatImportTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoLBTJDatImportDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨5点半执行 -->
-		<property name="cronExpression" value="0 30 5 * * ?"></property>
+		<!-- 每天的凌晨7点执行 -->
+		<property name="cronExpression" value="0 0 7 * * ?"></property>
 	</bean>
 	
 	<bean id="doCoreDataImportTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoCoreDataImportDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨5点执行 -->
-		<property name="cronExpression" value="0 0 5 * * ?"></property>
+		<!-- 每天的凌晨6点半执行 -->
+		<property name="cronExpression" value="0 30 6 * * ?"></property>
 	</bean>
 	
 	<bean id="doNetPeiChaoTrigger"
@@ -321,7 +324,7 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoAtmJiaChaoDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨1点执行 -->
+		<!-- 每天的凌晨2点执行 -->
 		<property name="cronExpression" value="0 0 2 * * ?"></property>
 	</bean>
 	
@@ -337,21 +340,23 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobBankAndNetRepDetail" />
 		<property name="startDelay" value="1000" />
-		<property name="cronExpression" value="0 0 1 * * ?"></property>
+		<!-- 每天的凌晨1点20分执行 -->
+		<property name="cronExpression" value="0 20 1 * * ?"></property>
 	</bean>
 	
 	<bean id="doLanBiaoTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoLanBiaoDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的早上8点执行 -->
-		<property name="cronExpression" value="0 0 8 * * ?"></property>
+		<!-- 每天的早上10点执行 -->
+		<property name="cronExpression" value="0 0 10 * * ?"></property>
 	</bean> 
 	
 	<bean id="doBagInfoTrigger"
 		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoBagInfoDetail" />
 		<property name="startDelay" value="1000" />
+		<!-- 每600秒执行一次 -->
 		<property name="repeatInterval" value="600000" />
 	</bean>
 	
@@ -367,8 +372,8 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDoProDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天凌晨一点执行 -->
-		<property name="cronExpression" value="0 0 1 * * ?"></property>
+		<!-- 每天凌晨1点10分执行 -->
+		<property name="cronExpression" value="0 10 1 * * ?"></property>
 	</bean>
 	
 	<bean id="doUpdateMonTrigger"
@@ -383,8 +388,8 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobPbDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天凌晨一点执行 -->
-		<property name="cronExpression" value="0 0 1 * * ?"></property>
+		<!-- 每天凌晨一点半执行 -->
+		<property name="cronExpression" value="0 30 1 * * ?"></property>
 	</bean>
 	
 	<bean id="startQuertz" lazy-init="false" autowire="no"

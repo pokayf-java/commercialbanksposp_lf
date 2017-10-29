@@ -8,7 +8,12 @@ import javax.persistence.Table;
 import com.poka.app.util.InitConstant;
 /**
  * 
- * @author lb(冠字号编码规则表)
+ * @ClassName:  MonRule   
+ * @Description:黑名单规则表
+ * @author: pokalb
+ * @date:   2017年10月24日 下午9:20:25(update)   
+ *     
+ * @Copyright: 2017 www.poka.com Inc. All rights reserved. 
  *
  */
 @Entity
@@ -28,6 +33,8 @@ public class MonRule {
 	private String monVal;			//币值
 	
 	private String sourceType;		//来源类型 ：0:商行,1:人行
+	
+	private String classId;			//黑名单类型
 
 	static{
 		new InitConstant();		   //初始化常量
@@ -95,6 +102,15 @@ public class MonRule {
 
 	public void setSourceType(String sourceType) {
 		this.sourceType = sourceType;
+	}
+
+	@Column(name = "CLASSID",length = 2)
+	public String getClassId() {
+		return classId;
+	}
+
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
 
 }

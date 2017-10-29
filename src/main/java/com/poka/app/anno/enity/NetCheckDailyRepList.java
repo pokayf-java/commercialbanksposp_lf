@@ -26,6 +26,7 @@ public class NetCheckDailyRepList {
 	private BigDecimal monVal;		//币值
 	private BigInteger records;		//张数
 	private String perCode;			//机具号
+	private Integer	checkType;		//清分清点类型
 	
 	@Id
 	@Column(name="BANKNO",length=20)
@@ -84,6 +85,14 @@ public class NetCheckDailyRepList {
 	}
 	public void setPerCode(String perCode) {
 		this.perCode = perCode;
+	}
+	
+	@Column(name="CHECKTYPE")
+	public Integer getCheckType() {
+		return checkType;
+	}
+	public void setCheckType(Integer checkType) {
+		this.checkType = checkType;
 	}
 	
 	

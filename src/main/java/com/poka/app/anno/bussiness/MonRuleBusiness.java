@@ -41,6 +41,11 @@ public class MonRuleBusiness {
 	}
 	
 	public boolean getMonRuleData(List<MonRule> monRuleList){
+		//删除商行本地历史黑名单数据
+		List<MonRule> monRuleList_Old = monRuleService.getMonRuleList();
+		for(MonRule monRule:monRuleList_Old){
+			monRuleService.delete(monRule);
+		}
 		if(null!=monRuleList&&monRuleList.size()>0){
 			for(MonRule monRule:monRuleList){
 				//1：表示来至人行的同步可疑数据

@@ -3,7 +3,6 @@ package com.poka.app.quartz;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.poka.app.anno.bussiness.BagInfoBusiness;
-import com.poka.app.anno.bussiness.ZhengKunqkBusiness;
 import com.poka.app.util.ConstantUtil;
 
 /**

@@ -5,6 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.poka.app.anno.bussiness.ZhengKunqkBusiness;
 import com.poka.app.util.ConstantUtil;
 
+/**
+ * 整捆取款文件定时解析
+ * @author lb
+ *
+ */
 public class DoZhKunqkJob {
 
 	private ZhengKunqkBusiness zhengKunqkBusiness;
