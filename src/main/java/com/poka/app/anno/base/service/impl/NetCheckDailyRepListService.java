@@ -71,6 +71,10 @@ public class NetCheckDailyRepListService extends BaseService<NetCheckDailyRepLis
 			}
 			this.getBaseDao().getSession().createSQLQuery(sql).executeUpdate();
 		}
-
+	}
+	
+	public int getNetCheckDailyRepListSize() {
+		String hql = "select count(*)  from NetCheckDailyRepList";
+		return ((Integer) this.baseDao.findUnique(hql)).intValue();
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
 import com.poka.app.anno.base.service.impl.BankCheckDailyRepListService;
 import com.poka.app.anno.base.service.impl.BankCheckDailyRepService;
 import com.poka.app.anno.base.service.impl.NetCheckDailyRepListService;
@@ -17,6 +18,7 @@ import com.poka.app.anno.enity.BankCheckDailyRep;
 import com.poka.app.anno.enity.BankCheckDailyRepList;
 import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
+import com.poka.app.anno.enity.PerInfo;
 import com.poka.app.pb.ws.IPBPospSW;
 import com.poka.app.util.CxfUtil;
 import com.poka.app.util.PokaDateUtil;
@@ -257,7 +259,7 @@ public class BankAndNetRepBusiness {
 		} else if (bankOrNetFlag == 2) {
 			if (null != netCheckDailyRepList && netCheckDailyRepList.size() > 0) {
 				try {
-					result = service.sendNetCheckDailyRepList(netCheckDailyRepList);
+					result = service.sendNetCheckDailyRepList(new Gson().toJson(netCheckDailyRepList));
 				} catch (Exception ex) {
 					logger.info("连接服务器失败...");
 				}

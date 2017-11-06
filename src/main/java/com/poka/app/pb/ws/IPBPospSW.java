@@ -16,7 +16,6 @@ import com.poka.app.anno.enity.BusinessListDetail;
 import com.poka.app.anno.enity.MonBoxAddMon;
 import com.poka.app.anno.enity.MoneyOut;
 import com.poka.app.anno.enity.NetCheckDailyRep;
-import com.poka.app.anno.enity.NetCheckDailyRepList;
 import com.poka.app.anno.enity.QryApply;
 import com.poka.app.anno.enity.ShuaKaJiLu;
 import com.poka.app.anno.enity.TAgencyCheck;
@@ -63,11 +62,16 @@ public interface IPBPospSW {
 	public boolean sendNetCheckDailyRep(
 			@WebParam(name = "netCheckDailyRepList") List<NetCheckDailyRep> netCheckDailyRepList);
 
+//	/* 网点流水 */
+//	@WebMethod(operationName = "sendNetCheckDailyRepList")
+//	@WebResult(name = "result")
+//	public boolean sendNetCheckDailyRepList(
+//			@WebParam(name = "netCheckDailyRepListFlow") List<NetCheckDailyRepList> netCheckDailyRepListFlow);
+	
 	/* 网点流水 */
 	@WebMethod(operationName = "sendNetCheckDailyRepList")
 	@WebResult(name = "result")
-	public boolean sendNetCheckDailyRepList(
-			@WebParam(name = "netCheckDailyRepListFlow") List<NetCheckDailyRepList> netCheckDailyRepListFlow);
+	public boolean sendNetCheckDailyRepList(@WebParam(name = "listData") String listData);
 
 	/* 银行日结 */
 	@WebMethod(operationName = "sendBankCheckDailyRep")
