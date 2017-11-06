@@ -340,8 +340,8 @@
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="jobBankAndNetRepDetail" />
 		<property name="startDelay" value="1000" />
-		<!-- 每天的凌晨1点20分执行 -->
-		<property name="cronExpression" value="0 20 1 * * ?"></property>
+		<!-- 每天的凌晨2点20分执行 -->
+		<property name="cronExpression" value="0 20 2 * * ?"></property>
 	</bean>
 	
 	<bean id="doLanBiaoTrigger"
