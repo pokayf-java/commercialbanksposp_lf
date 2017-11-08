@@ -18,8 +18,8 @@ import com.poka.app.anno.enity.BankCheckDailyRep;
 import com.poka.app.anno.enity.BankCheckDailyRepList;
 import com.poka.app.anno.enity.NetCheckDailyRep;
 import com.poka.app.anno.enity.NetCheckDailyRepList;
-import com.poka.app.anno.enity.PerInfo;
 import com.poka.app.pb.ws.IPBPospSW;
+import com.poka.app.util.ConstantUtil;
 import com.poka.app.util.CxfUtil;
 import com.poka.app.util.PokaDateUtil;
 
@@ -145,7 +145,7 @@ public class BankAndNetRepBusiness {
 			if (null != checkDailyRepLogsSec && checkDailyRepLogsSec.size() > 0) {
 				sendCheckDailyRepListInfo(null,2);
 			} else {
-				List<String> moreDateList = PokaDateUtil.getMoreDate(15);
+				List<String> moreDateList = PokaDateUtil.getMoreDate(Integer.parseInt(ConstantUtil.dayNum));
 				if (null != moreDateList && moreDateList.size() > 0) {
 					for (int i = 0; i < moreDateList.size(); i++) {
 						String operDateTmp = moreDateList.get(i);
@@ -174,7 +174,7 @@ public class BankAndNetRepBusiness {
 			if (null != checkDailyRepLogsSec && checkDailyRepLogsSec.size() > 0) {
 				sendCheckDailyRepListInfo(null, 1);
 			} else {
-				List<String> moreDateList = PokaDateUtil.getMoreDate(15);
+				List<String> moreDateList = PokaDateUtil.getMoreDate(Integer.parseInt(ConstantUtil.dayNum));
 				if (null != moreDateList && moreDateList.size() > 0) {
 					for (int i = 0; i < moreDateList.size(); i++) {
 						String operDateTmp = moreDateList.get(i);

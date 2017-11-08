@@ -132,6 +132,15 @@ public class ArgsConfigUtil {
 		return p.getProperty("crProduceFlag");
 	}
 	
+	
+	/**
+	 * 日结同步天数
+	 * @return
+	 */
+	public String getDayNum(){
+		return p.getProperty("dayNum");
+	}
+	
 	/**
 	 * 核心数据分析存储过程执行开关
 	 * @return

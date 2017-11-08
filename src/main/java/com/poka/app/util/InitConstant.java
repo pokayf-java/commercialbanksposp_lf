@@ -33,6 +33,7 @@ public class InitConstant {
 			ConstantUtil.atmJiaChaoFlag = argsConfigUtil.getAtmJiaChaoFlag();
 			ConstantUtil.chaoXJiaChaoFlag = argsConfigUtil.getChaoXJiaChaoFlag();
 			ConstantUtil.cibAgencyFlag = argsConfigUtil.getCibAgencyFlag();
+			ConstantUtil.dayNum = argsConfigUtil.getDayNum();
 			
 		}
 	}
