@@ -20,16 +20,15 @@ import javax.persistence.Table;
 @Table(name = "NETCHECKDAILYREP_LIST")
 public class NetCheckDailyRepList {
 
-	private String bankNo; // 银行号
-	private String netNo; // 网点号
-	private String checkDate; // 清分日期
-	private String operDate; // 插入时间
-	private BigDecimal monVal; // 币值
+	private String bankNo; 		// 银行号
+	private String netNo; 		// 网点号
+	private String checkDate; 	// 清分日期
+	private String operDate; 	// 插入时间
+	private BigDecimal monVal; 	// 币值
 	private BigInteger records; // 张数
-	private String perCode; // 机具号
-	private Integer checkType; // 清分清点类型
+	private String perCode; 	// 机具号
+	private Integer checkType; 	// 清分清点类型
 
-	@Id
 	@Column(name = "BANKNO", length = 20)
 	public String getBankNo() {
 		return bankNo;
@@ -59,6 +58,7 @@ public class NetCheckDailyRepList {
 		this.checkDate = checkDate;
 	}
 
+	@Id
 	@Column(name = "MONVAL")
 	public BigDecimal getMonVal() {
 		return monVal;
@@ -68,6 +68,7 @@ public class NetCheckDailyRepList {
 		this.monVal = monVal;
 	}
 
+	@Id
 	@Column(name = "RECORDS")
 	public BigInteger getRecords() {
 		return records;
@@ -77,6 +78,7 @@ public class NetCheckDailyRepList {
 		this.records = records;
 	}
 
+	@Id
 	@Column(name = "OPERDATE", length = 20)
 	public String getOperDate() {
 		return operDate;
@@ -95,6 +97,7 @@ public class NetCheckDailyRepList {
 		this.perCode = perCode;
 	}
 
+	@Id
 	@Column(name = "CHECKTYPE")
 	public Integer getCheckType() {
 		return checkType;

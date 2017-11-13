@@ -2,25 +2,25 @@ package com.poka.app.anno.enity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @SuppressWarnings("serial")
 public class NetCheckDailyRepListPK implements Serializable {
 
-	private String bankNo;
+	// private String bankNo;
 	private String checkDate;
 	private String netNo;
 	private BigDecimal monVal;
 	private String operDate;
-	private String perCode;
+	// private String perCode;
+	private Integer checkType;
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof NetCheckDailyRepListPK) {
 			NetCheckDailyRepListPK pk = (NetCheckDailyRepListPK) obj;
-			if (pk.getBankNo().equals(this.bankNo) && pk.getCheckDate().equals(this.checkDate)
-					&& pk.getNetNo().equals(this.netNo) && pk.getMonVal().equals(this.monVal)
-					&& pk.getOperDate().equals(this.operDate) && pk.getPerCode().equals(this.perCode)) {
+			if (pk.getCheckDate().equals(this.checkDate) && pk.getNetNo().equals(this.netNo)
+					&& pk.getMonVal().equals(this.monVal) && pk.getOperDate().equals(this.operDate)
+					&& pk.getCheckType().equals(this.checkType)) {
 				return true;
 			}
 		}
@@ -29,17 +29,17 @@ public class NetCheckDailyRepListPK implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return (this.getBankNo() + this.getCheckDate() + this.getNetNo() + this.getMonVal() + this.getOperDate()
-				+ this.getPerCode()).hashCode();
+		return (this.getCheckDate() + this.getNetNo() + this.getMonVal() + this.getOperDate() + this.getCheckType())
+				.hashCode();
 	}
 
-	public String getBankNo() {
-		return bankNo;
-	}
-
-	public void setBankNo(String bankNo) {
-		this.bankNo = bankNo;
-	}
+	// public String getBankNo() {
+	// return bankNo;
+	// }
+	//
+	// public void setBankNo(String bankNo) {
+	// this.bankNo = bankNo;
+	// }
 
 	public String getCheckDate() {
 		return checkDate;
@@ -73,12 +73,20 @@ public class NetCheckDailyRepListPK implements Serializable {
 		this.operDate = operDate;
 	}
 
-	public String getPerCode() {
-		return perCode;
+	public Integer getCheckType() {
+		return checkType;
 	}
 
-	public void setPerCode(String perCode) {
-		this.perCode = perCode;
+	public void setCheckType(Integer checkType) {
+		this.checkType = checkType;
 	}
+
+	// public String getPerCode() {
+	// return perCode;
+	// }
+	//
+	// public void setPerCode(String perCode) {
+	// this.perCode = perCode;
+	// }
 
 }
