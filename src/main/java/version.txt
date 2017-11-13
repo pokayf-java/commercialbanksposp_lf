@@ -1,5 +1,5 @@
-Version:V4.1.1_For_LF_CIB
+Version:V4.1.2_For_LF_CIB
 Province:HB
 City:LF
 Data:Mysql
-Build:2017-11-08
+Build:2017-11-13
